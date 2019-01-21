@@ -1,0 +1,17 @@
+\documentclass[french]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+\usepackage{subfiles} 
+\usepackage{import}
+\usepackage[subpreambles=true]{standalone}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\rhead{Sylvain, Raphaël\\111 124 564} 
+ 
+\begin{document}   
+\subfile{subfiles/titlepage.tex}
+   
+\subimport{./subfiles/}{question1.tex}  
+\end{document}   
