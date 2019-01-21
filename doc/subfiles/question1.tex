@@ -3,6 +3,32 @@
 \begin{document}
 \centerline{\Huge \bf Question 1}
 \bigskip
+\noindent{\bf Description}
+
+L'algorithme se base sur ces observations suivantes:
+\begin{enumerate}
+    \item Zéro est l'élément absorbant de la multiplication;
+    \item Le résultat est un produit d'éléments de vecteur (une multiplication);
+    \item Lorsque deux zéro sont dans le vecteur, le produit sera toujours zéro;
+    \item Nous pouvons émuler la non-production d'un élément, en divisant le produit par celui-ci, pour vu qu'il ne soit pas zéro.
+\end{enumerate}
+
+L'algorithme débute donc initialisant une variable pour conserver produit total (initialiser à 1), 
+aisi qu'un vecteur qui conservera les indices des éléments absorbant (0).
+
+Puis, il parcourt tous les éléments de notre vecteur entrant. Si l'élément est zéro, il ajoute l'index
+de cet élément dans un nouveau vecteur. Sinon, il multiplie la variable par lui-même.
+
+Cette boucle terminée, il entre dans une des trois embranchements dépendament de la taille du vecteur des indices éléments absorbants.
+
+Premièrement, si le vecteur contient plus de un indice, alors nous savons que tous les éléments du vecteur résultat seront zéro, 
+puisque nous sommes garantis qu'il y aura une multiplication par zéro pour obtenir le résultat.
+
+Deuxièmement, si le vecteur contient un et un seul indice, alors tous les éléments du vecteur résultat seront
+à zéro, à l'exception de l'élément à cet indice qui aura le résultat total du produit.
+
+Finalement, si le vecteur ne contient aucun indice, alors chaque élément du vecteur résultat sera égale au produit, diviser par 
+l'élément à l'indice correspodant du vecteur entrant.
 
 
 \end{document} 
