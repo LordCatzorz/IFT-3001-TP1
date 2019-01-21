@@ -36,3 +36,6 @@
 *.gz
 *.aux
 *.sta
+
+#vs COde
+.vscode/
