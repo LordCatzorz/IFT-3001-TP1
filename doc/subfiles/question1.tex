@@ -3,7 +3,7 @@
 \begin{document}
 \centerline{\Huge \bf Question 1}
 \bigskip
-\noindent{\bf Description}
+\noindent{\bf Description textuelle}
 
 L'algorithme se base sur ces observations suivantes:
 \begin{enumerate}
@@ -13,22 +13,30 @@ L'algorithme se base sur ces observations suivantes:
     \item Nous pouvons émuler la non-production d'un élément, en divisant le produit par celui-ci, pour vu qu'il ne soit pas zéro.
 \end{enumerate}
 
-L'algorithme débute donc initialisant une variable pour conserver produit total (initialiser à 1), 
-aisi qu'un vecteur qui conservera les indices des éléments absorbant (0).
+L'algorithme débute donc en initialisant une variable pour conserver le produit total (initialiser à 1), 
+ainsi que deux variables "indicatices" (flags). Un pour conserver l'indice d'un élément absorbant et l'autre pour indiquer s'il y a plus d'un élément absorbant.
 
-Puis, il parcourt tous les éléments de notre vecteur entrant. Si l'élément est zéro, il ajoute l'index
-de cet élément dans un nouveau vecteur. Sinon, il multiplie la variable par lui-même.
+Puis, l'algorithme parcourt tous les éléments de notre vecteur entrant. S'il trouve pour la première fois un zéro, il affecter l'indice
+où cet élément se trouve dans le vecteur. S'il en trouve un deuxième il affecte la valeur bouléen indiquant plusieurs zéros à vrai. 
 
-Cette boucle terminée, il entre dans une des trois embranchements dépendament de la taille du vecteur des indices éléments absorbants.
+Cette boucle terminée, il entre dans une des trois embranchements dépendanments de la valeur des variables indicatrices.
 
-Premièrement, si le vecteur contient plus de un indice, alors nous savons que tous les éléments du vecteur résultat seront zéro, 
-puisque nous sommes garantis qu'il y aura une multiplication par zéro pour obtenir le résultat.
+Premièrement, si la variable booléenne indiquant que plusieurs zéro ont été trouvés dans le vecteur entrant,
+alors nous initialisons le vecteur résultat pour qu'il ne contienne que des zéros, puisque nous sommes garantis qu'il 
+y aura une mutiplication par zéro pour tout ces éléments. 
 
-Deuxièmement, si le vecteur contient un et un seul indice, alors tous les éléments du vecteur résultat seront
+Sinon, si la variable indiquant l'indice d'un zéro a été définie, alors tous les éléments du vecteur résultat seront
 à zéro, à l'exception de l'élément à cet indice qui aura le résultat total du produit.
 
-Finalement, si le vecteur ne contient aucun indice, alors chaque élément du vecteur résultat sera égale au produit, diviser par 
-l'élément à l'indice correspodant du vecteur entrant.
+Finalement, si aucunne des deux variables indicatrices n'a été définie, alors chaque élément du vecteur résultat sera égale au produit, diviser par 
+l'élément à l'indice correspondant du vecteur entrant.
+
+\bigskip
+\noindent{\bf Description textuelle}
+
+
+
+
 
 
 \end{document} 
