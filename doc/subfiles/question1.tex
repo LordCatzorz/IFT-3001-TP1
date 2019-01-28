@@ -64,33 +64,33 @@ L'algorithme se base sur ces observations suivantes:
 \begin{enumerate}
     \item Zéro est l'élément absorbant de la multiplication;
     \item Le résultat est un produit d'éléments de vecteur (une multiplication);
-    \item Lorsque deux zéro sont dans le vecteur, le produit sera toujours zéro;
-    \item Nous pouvons émuler la non-production d'un élément, en divisant le produit par celui-ci, pour vu qu'il ne soit pas zéro.
+    \item Lorsque deux zéros sont dans le vecteur, le produit sera toujours zéro;
+    \item Nous pouvons émuler la non-production d'un élément, en divisant le produit par celui-ci, pour vu qu'il n’ est pas zéro.
 \end{enumerate}
 
-L'algorithme débute donc en initialisant une variable pour conserver le produit total (initialiser à 1), 
+L'algorithme débute donc en initialisant une variable pour conserver le produit total (initialisé à 1), 
 ainsi que deux variables "indicatices" (flags). Un pour conserver l'indice d'un élément absorbant et l'autre pour indiquer s'il y a plus d'un élément absorbant.
 
-Puis, l'algorithme parcourt tous les éléments de notre vecteur entrant. S'il trouve pour la première fois un zéro, il affecter l'indice
-où cet élément se trouve dans le vecteur. S'il en trouve un deuxième il affecte la valeur bouléen indiquant plusieurs zéros à vrai. 
+Puis, l'algorithme parcourt tous les éléments de notre vecteur entrant. S'il trouve pour la première fois un zéro, il affectera l'indice
+où cet élément se trouve dans le vecteur. S'il en trouve un deuxième il affecte la valeur booléen indiquant plusieurs zéros à vrai. 
 
-Cette boucle terminée, il entre dans une des trois embranchements dépendanments de la valeur des variables indicatrices.
+Cette boucle terminée, il entre dans un des trois embranchements dépendamment de la valeur des variables indicatrices.
 
-Premièrement, si la variable booléenne indiquant que plusieurs zéro ont été trouvés dans le vecteur entrant,
+Premièrement, si la variable booléenne indiquant que plusieurs zéros ont été trouvés dans le vecteur entrant,
 alors nous initialisons le vecteur résultat pour qu'il ne contienne que des zéros, puisque nous sommes garantis qu'il 
-y aura une mutiplication par zéro pour tout ces éléments. 
+y aura une multiplication par zéro pour tous ces éléments. 
 
 Sinon, si la variable indiquant l'indice d'un zéro a été définie, alors tous les éléments du vecteur résultat seront
 à zéro, à l'exception de l'élément à cet indice qui aura le résultat total du produit.
 
-Finalement, si aucunne des deux variables indicatrices n'a été définie, alors chaque élément du vecteur résultat sera égale au produit, diviser par 
+Finalement, si aucune des deux variables indicatrices n'a été définie, alors chaque élément du vecteur résultat sera égal au produit, diviser par 
 l'élément à l'indice correspondant du vecteur entrant.
 
 \section*{Analyse de l'algorithme}
 
 Puisque l'algorithme est trop complexe pour être analysé à l'aide d'une seule opératoire de base,
-nous allons séparer l'algorithme en quatres parties et analyser chacune de ces parties individuellement,
-puis conclure sur sur l'entièreté de l'algorithme à partir de ces sous-analyses.
+nous allons séparer l'algorithme en quatre parties et analyser chacune de ces parties individuellement,
+puis conclure sur l'entièreté de l'algorithme à partir de ces sous-analyses.
 
 La taille de l'instance est $n$, soit la cardinalité du vecteur entrant $A$.
 
@@ -98,14 +98,14 @@ La taille de l'instance est $n$, soit la cardinalité du vecteur entrant $A$.
 
 Le bloc A est composé de la première boucle \lstinline{for} et des déclarations lui précédents. 
 
-Nous pouvons choisir comme opération de base le \lstinline{!productIsAlwaysZero}, car c'est la comparaison qui est effectué
+Nous pouvons choisir comme opération de base le \lstinline{!productIsAlwaysZero}, car c'est la comparaison qui est effectuée
 le plus souvent, c'est-à-dire à chaque itération. De plus, la fonction \lstinline{A.at(i)} à l'intérieur de la boucle s'effectue en temps constant.
 
 
 Le nombre de fois que cette opération de base peut s'exécuter dépendant du contenu du vecteur entrant ainsi que de sa cardinalité.
 
 \subsubsection*{Meilleur cas}
-En meilleur cas, les deux premiers éléments du vecteur sont 0. Si la boucle découvre deux 0, elle se courcircuite. Nous avons donc que:
+En meilleur cas, les deux premiers éléments du vecteur sont 0. Si la boucle découvre deux 0, elle se court-circuite. Nous avons donc que:
 \begin{deriv}
     C^A_{best}(n) = 3
     \<\Rightarrow
@@ -118,7 +118,7 @@ En meilleur cas, les deux premiers éléments du vecteur sont 0. Si la boucle d�
 
 \subsubsection*{Pire cas}
 En pire cas, nous devons parcourir l'ensemble des éléments du vecteur entrant. À chacune des boucles, nous devons 
-effectuer une seule comparaison, puis nous effectuons une dernière compairaison avant de sortir. Nous avons donc
+effectuer une seule comparaison, puis nous effectuons une dernière comparaison avant de sortir. Nous avons donc : 
 \begin{deriv}
     C^A_{worst}(n) 
     \<= 
@@ -194,12 +194,12 @@ est constante en tout temps. Donc
 
 \subsection*{Bloc D}
 
-Le bloc D est composé de la boucle \lstinline{for} situé dans le \lstinline{else}.
+Le bloc D est composé de la boucle \lstinline{for} située dans le \lstinline{else}.
 
-Ce bloc est exéctuer que lorsque aucun zéro n'a été trouvé dans le vecteur entrant.
+Ce bloc est exécuté que lorsqu’aucun zéro n'a été trouvé dans le vecteur entrant.
 
 L'opération à utiliser est l'appel à la fonction \lstinline{std::vector::push_back}, car elle a une complexité amortie 
-de $\Theta(1)$ et qu'elle est appelé $n$ fois, soit à une constante près de l'élément appeler le plus souvent.
+de $\Theta(1)$ et qu'elle est appelée $n$ fois, soit à une constante près de l'élément appelé le plus souvent.
 De plus, l'appel à \lstinline{std::vector::at} à une complexité constante qui est moindre ou égale à la complexité de \lstinline{std::vector::push_back}.
 
 Donc
@@ -235,7 +235,7 @@ L'algorithme est composé de 4 blocs. Dont un et un seul bloc entre B, C et D ne
 Notons $C(n)$ le temps d'exécution de l'algorithme complet. 
 Le bloc A est exécuté dans tous les cas. 
 
-En meilleur cas, le bloc B est executé après le bloc A. Nous avons donc :
+En meilleur cas, le bloc B est exécuté après le bloc A. Nous avons donc :
 
 \begin{deriv}
     C_{best}(n)
