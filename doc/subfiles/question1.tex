@@ -137,4 +137,39 @@ effectuer une seule comparaison, puis nous effectuons une dernière compairaison
     \commentaire{Définition de $\Theta$ avec $c_1 = \frac{1}{2}$, $c_2 = 2$ et $n_0 = 1$  }
     \Theta(n)
 \end{deriv}
+
+\subsection*{Bloc B}
+
+Le bloc B est composé uniquement du premier bloc du if, soit :
+
+\begin{lstlisting}
+    B.assign(VECTOR_SIZE, 0);
+\end{lstlisting}
+
+Ce bloc est exécuté uniquement si deux zéros sont trouvés dans le vecteur entrant.
+
+L'opération à utiliser est donc l'appel à la fonction \lstinline{std::vector::assign}.
+
+La complexité de la fonction \lstinline{std::vector::assign} est linéaire sur la valeur du premier paramètre.
+Dans notre cas, ce paramètre est équivalent à la cardinalité du vecteur entrant. 
+Donc
+
+$C^B(n) \in \Theta(n)$
+
+\subsection*{Bloc C}
+
+Le bloc C est composé uniquement du deuxième bloc du if, soit:
+\begin{lstlisting}
+    B.assign(VECTOR_SIZE, 0);
+    B.at(indexOfAbsorbingElement) = totalProductExceptZeroes;
+\end{lstlisting}
+
+Ce bloc est exécuté uniquement si un seul zéro a été trouvé dans le vecteur entrant.
+
+L'opération à utiliser est donc l'appel à la fonction \lstinline{std::vector::assign}, puisque celle-ci à
+une complexité linéaire sur la valeur du premier paramètre, alors que la fonction \lstinline{std::vector::at}
+est constante. Donc
+
+$C^C(n) \in \Theta(n)$
+
 \end{document} 
