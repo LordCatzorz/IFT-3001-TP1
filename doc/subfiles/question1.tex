@@ -48,7 +48,7 @@
 \newcommand{\sepcom}{\hspace{.4em}\&\hspace{.4em}\,}
 
 %% Autre %%
-\lstset{language=C++}
+\lstset{language=C++,basicstyle=\footnotesize\ttfamily}
 \newcommand{\BigO}{\mathcal{O}}
 
 
@@ -140,7 +140,7 @@ effectuer une seule comparaison, puis nous effectuons une dernière compairaison
 
 \subsection*{Bloc B}
 
-Le bloc B est composé uniquement du premier bloc du if, soit :
+Le bloc B est composé uniquement du premier bloc du \lstinline{if}, soit :
 
 \begin{lstlisting}
     B.assign(VECTOR_SIZE, 0);
@@ -150,15 +150,25 @@ Ce bloc est exécuté uniquement si deux zéros sont trouvés dans le vecteur en
 
 L'opération à utiliser est donc l'appel à la fonction \lstinline{std::vector::assign}.
 
-La complexité de la fonction \lstinline{std::vector::assign} est linéaire sur la valeur du premier paramètre.
+La complexité de la fonction \lstinline{std::vector::assign} est linéaire en tout temps sur la valeur du premier paramètre.
 Dans notre cas, ce paramètre est équivalent à la cardinalité du vecteur entrant. 
 Donc
-
-$C^B(n) \in \Theta(n)$
+\begin{deriv}
+    C^B(n)
+    \<=
+    \commentaire{Définition de la complexité de $C^B$}
+    C_{assign}(n) \cdot 1
+    \<=
+    \commentaire{Simplification}
+    C_{assign}(n)
+    \<\in
+    \commentaire{Documentation de \lstinline{std::vector::assign}}
+    \Theta(n)
+\end{deriv}
 
 \subsection*{Bloc C}
 
-Le bloc C est composé uniquement du deuxième bloc du if, soit:
+Le bloc C est composé uniquement du bloc \lstinline{else if}, soit:
 \begin{lstlisting}
     B.assign(VECTOR_SIZE, 0);
     B.at(indexOfAbsorbingElement) = totalProductExceptZeroes;
@@ -167,9 +177,133 @@ Le bloc C est composé uniquement du deuxième bloc du if, soit:
 Ce bloc est exécuté uniquement si un seul zéro a été trouvé dans le vecteur entrant.
 
 L'opération à utiliser est donc l'appel à la fonction \lstinline{std::vector::assign}, puisque celle-ci à
-une complexité linéaire sur la valeur du premier paramètre, alors que la fonction \lstinline{std::vector::at}
-est constante. Donc
+une complexité linéaire sur la valeur du premier paramètre en tout temps, alors que la fonction \lstinline{std::vector::at}
+est constante en tout temps. Donc
+\begin{deriv}
+    C^C(n)
+    \<=
+    \commentaire{Définition de la complexité de $C^C$}
+    C_{assign}(n) \cdot 1
+    \<=
+    \commentaire{Simplification}
+    C_{assign}(n)
+    \<\in
+    \commentaire{Documentation de \lstinline{std::vector::assign}}
+    \Theta(n)
+\end{deriv}
 
-$C^C(n) \in \Theta(n)$
+\subsection*{Bloc D}
+
+Le bloc D est composé de la boucle \lstinline{for} situé dans le \lstinline{else}.
+
+Ce bloc est exéctuer que lorsque aucun zéro n'a été trouvé dans le vecteur entrant.
+
+L'opération à utiliser est l'appel à la fonction \lstinline{std::vector::push_back}, car elle a une complexité amortie 
+de $\Theta(1)$ et qu'elle est appelé $n$ fois, soit à une constante près de l'élément appeler le plus souvent.
+De plus, l'appel à \lstinline{std::vector::at} à une complexité constante qui est moindre ou égale à la complexité de \lstinline{std::vector::push_back}.
+
+Donc
+\begin{deriv}
+    C^D(n)
+    \<=
+    \commentaire{Définition de la complexité de $C^D$}
+    C_{push\_back}(n) \cdot n
+    \<=
+    \commentaire{Abus de notation. 
+    \\Définition de la complexité de \lstinline{std::vector::push_back} }
+    1 \cdot n
+    \<=
+    \commentaire{Simplification }
+    n
+    \<\Rightarrow
+    \commentaire{Donc}
+    n \leq C^D(n) = n \leq n $ $ {\forall n \geq 0}
+    \<\in
+    \commentaire{Définition de $\Theta$ avec $c_1 = c_2 = 1$ et $n_0 = 0$}
+    \Theta(n)
+\end{deriv}
+
+\subsection*{Résultat final}
+
+L'algorithme est composé de 4 blocs. Dont un et un seul bloc entre B, C et D ne peut-être exécuter.
+Notons $C(n)$ le temps d'exécution de l'algorithme complet. 
+Le bloc A est exécuté dans tous les cas. 
+
+En meilleur cas, le bloc B est executé après le bloc A. Nous avons donc :
+
+\begin{deriv}
+    C_{best}(n)
+    \<=
+    \commentaire{Définition de la complexité de $C_best$}
+    C^A_{best}(n) + C^B(n)
+    \<=
+    \commentaire{Définition de $C^A_{best}(n)$ et $C^B(n)$}
+    3 + C_{assign}(n)
+    \<=
+    \commentaire{Abus de notation. 
+    \\Définition de la complexité de \lstinline{std::vector::assign}}
+    n + 3
+    \<=
+    \commentaire{Par la règle du maximum}
+    n
+    \<\Rightarrow
+    \commentaire{Donc}
+    n \leq C_{best}(n) = n \leq n $ $ \forall n \geq 0
+    \<\in
+    \commentaire{Définition de $\Theta$ avec $c_1 = c_2 = 1$ et $n_0 = 0$  }
+    \Theta(n)
+\end{deriv}
+
+Dans le pire cas, le bloc C ou D est exécuté après le bloc A. Nous avons donc:
+\begin{deriv}
+    C_{worst_C}(n)
+    \<=
+    \commentaire{Définition de la complexité de $C_{worst_C}$}
+    C^A_{worst}(n) + C^C(n)
+    \<=
+    \commentaire{Définition de $C^A_{best}(n)$ et $C^C(n)$}
+    n + 1 + C_{assign}(n)
+    \<=
+    \commentaire{Abus de notation. 
+    \\Définition de la complexité de \lstinline{std::vector::assign}}
+    n + 1 + n
+    \<=
+    \commentaire{Simplification}
+    2n+1
+    \<=
+    \commentaire{Par la règle du maximum}
+    2n
+    \<\Rightarrow
+    \commentaire{Donc}
+    n \leq C_{worst_C}(n) = 2n \leq 2n $ $ \forall n \geq 0
+    \<\in
+    \commentaire{Définition de $\Theta$ avec $c_1 = 1$, $c_2 = 2$ et $n_0 = 0$  }
+    \Theta(n)
+\end{deriv}
+
+et aussi que:
+\begin{deriv}
+    C_{worst_D}(n)
+    \<=
+    \commentaire{Définition de la complexité de $C_{worst_D}$}
+    C^A_{worst}(n) + C^D(n)
+    \<=
+    \commentaire{Définition de $C^A_{best}(n)$ et $C^D(n)$}
+    n + 1 + n
+    \<=
+    \commentaire{Simplification}
+    2n+1
+    \<=
+    \commentaire{Par la règle du maximum}
+    2n
+    \<\Rightarrow
+    \commentaire{Donc}
+    n \leq C_{worst_D}(n) = 2n \leq 2n $ $ \forall n \geq 0
+    \<\in
+    \commentaire{Définition de $\Theta$ avec $c_1 = 1$, $c_2 = 2$ et $n_0 = 0$  }
+    \Theta(n)
+\end{deriv}
+
+Donc, nous avons que cet algorithme est linéaire sur la cardinalité du vecteur entrant pour tous les cas.
 
 \end{document} 
