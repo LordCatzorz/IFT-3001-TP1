@@ -207,11 +207,17 @@ Donc
     C^D(n)
     \<=
     \commentaire{Définition de la complexité de $C^D$}
-    C_{push\_back}(n) \cdot n
+    \sum_{i=0}^{n} C_{push\_back}(n)
     \<=
+    \commentaire{Première règle de somation}
+    ((n-1) - 0 + 1) \cdot C_{push\_back}(n)
+    \<=
+    \commentaire{Simplification }
+    n \cdot C_{push\_back}(n)
+    \<\approx
     \commentaire{Abus de notation. 
     \\Définition de la complexité de \lstinline{std::vector::push_back} }
-    1 \cdot n
+    n \cdot 1
     \<=
     \commentaire{Simplification }
     n
@@ -239,7 +245,7 @@ En meilleur cas, le bloc B est executé après le bloc A. Nous avons donc :
     \<=
     \commentaire{Définition de $C^A_{best}(n)$ et $C^B(n)$}
     3 + C_{assign}(n)
-    \<=
+    \<\approx
     \commentaire{Abus de notation. 
     \\Définition de la complexité de \lstinline{std::vector::assign}}
     n + 3
@@ -263,7 +269,7 @@ Dans le pire cas, le bloc C ou D est exécuté après le bloc A. Nous avons donc
     \<=
     \commentaire{Définition de $C^A_{best}(n)$ et $C^C(n)$}
     n + 1 + C_{assign}(n)
-    \<=
+    \<\approx
     \commentaire{Abus de notation. 
     \\Définition de la complexité de \lstinline{std::vector::assign}}
     n + 1 + n
