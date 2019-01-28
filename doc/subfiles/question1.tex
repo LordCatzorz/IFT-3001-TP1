@@ -1,9 +1,64 @@
 % !TeX root = ../main.tex
 \documentclass[class=article]{standalone}
+\usepackage{listings}
+\usepackage{amsthm}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Environnement deriv pour les dérivations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newlength{\indentationFormule}
+\setlength{\indentationFormule}{1.3em}
+\newlength{\indentationTotaleFormule}
+\newlength{\indentationCommentaire}
+\setlength{\indentationCommentaire}{4em}
+\newlength{\indentationDerivation}
+\newlength{\largeurLangle}
+\settowidth{\largeurLangle}{$\langle$\hspace*{.4em}}
+\newlength{\largeurBoiteCommentaire}
+
+\newenvironment{deriv}[1][\leftmargini]%
+  {\setlength{\indentationDerivation}{#1}%
+    \setlength{\indentationTotaleFormule}{\indentationFormule}
+    \addtolength{\indentationTotaleFormule}{#1}
+    \setlength{\largeurBoiteCommentaire}{\linewidth}
+    \addtolength{\largeurBoiteCommentaire}{-\indentationFormule}
+    \addtolength{\largeurBoiteCommentaire}{-\indentationCommentaire}
+    \addtolength{\largeurBoiteCommentaire}{-\largeurLangle}
+    \addtolength{\largeurBoiteCommentaire}{-\indentationDerivation}
+    \begin{list}{}{\setlength{\leftmargin}{\indentationTotaleFormule}}
+                   \setlength{\baselineskip}{1.3\baselineskip}
+                   \item$}%
+   {\hbox{}$\end{list}}  % \hbox{} évite des underfull lors d'usages
+                         % sans \< et sans \commentaire (et avec
+                         % des \\ pour changer de ligne).
+
+\newcommand{\<}[1]{\\\hspace*{-\indentationFormule}\makebox(0,0)[bl]{$#1$}\hspace*{\indentationFormule}}
+
+\newcommand{\commentaire}[1]{\hspace*{\indentationCommentaire}\langle\hspace*{.4em}%
+    \begin{minipage}[t]{\largeurBoiteCommentaire}%
+        #1 $\rangle$\\\hbox{}% Bizarre. Pourquoi ça prend \\ ici et aussi à la ligne suivante ?
+                           % Sans \hbox{}, il y a des underfull.
+    \end{minipage}\\[-1ex] % Sans ces deux \\, l'espace après un commentaire n'est pas le même quand
+                           % le commentaire a plus d'une ligne.
+}
+
+\newcommand{\commentaireligne}[1]{$\mm ---#1$}{}
+\newcommand{\sepcom}{\hspace{.4em}\&\hspace{.4em}\,}
+
+%% Autre %%
+\lstset{language=C++}
+\newcommand{\BigO}{\mathcal{O}}
+
+
+
+
+
 \begin{document}
 \centerline{\Huge \bf Question 1}
 \bigskip
-\noindent{\bf Description textuelle}
+\section*{Description textuelle}
 
 L'algorithme se base sur ces observations suivantes:
 \begin{enumerate}
@@ -31,7 +86,55 @@ Sinon, si la variable indiquant l'indice d'un zéro a été définie, alors tous
 Finalement, si aucunne des deux variables indicatrices n'a été définie, alors chaque élément du vecteur résultat sera égale au produit, diviser par 
 l'élément à l'indice correspondant du vecteur entrant.
 
-\bigskip
-\noindent{\bf Analyse de l'algorithme}
+\section*{Analyse de l'algorithme}
 
+Puisque l'algorithme est trop complexe pour être analysé à l'aide d'une seule opératoire de base,
+nous allons séparer l'algorithme en quatres parties et analyser chacune de ces parties individuellement,
+puis conclure sur sur l'entièreté de l'algorithme à partir de ces sous-analyses.
+
+La taille de l'instance est $n$, soit la cardinalité du vecteur entrant $A$.
+
+\subsection*{Bloc A}
+
+Le bloc A est composé de la première boucle \lstinline{for} et des déclarations lui précédents. 
+
+Nous pouvons choisir comme opération de base le \lstinline{!productIsAlwaysZero}, car c'est la comparaison qui est effectué
+le plus souvent, c'est-à-dire à chaque itération. De plus, la fonction \lstinline{A.at(i)} à l'intérieur de la boucle s'effectue en temps constant.
+
+
+Le nombre de fois que cette opération de base peut s'exécuter dépendant du contenu du vecteur entrant ainsi que de sa cardinalité.
+
+\subsubsection*{Meilleur cas}
+En meilleur cas, les deux premiers éléments du vecteur sont 0. Si la boucle découvre deux 0, elle se courcircuite. Nous avons donc que:
+\begin{deriv}
+    C^A_{best}(n) = 3
+    \<\Rightarrow
+    \commentaire{Donc}
+    1 \leq C^A_{best}(n) = 3 \leq 5
+    \<\in 
+    \commentaire{Définition de $\Theta$ avec $c_1 = 1$, $c_2 = 5$ et $n_0 = 0$}    
+    \Theta(1)
+\end{deriv}
+
+\subsubsection*{Pire cas}
+En pire cas, nous devons parcourir l'ensemble des éléments du vecteur entrant. À chacune des boucles, nous devons 
+effectuer une seule comparaison, puis nous effectuons une dernière compairaison avant de sortir. Nous avons donc
+\begin{deriv}
+    C^A_{worst}(n) 
+    \<= 
+    \commentaire{Définition mathématique}
+    \sum_{0}^{n-1}1 + 1
+    \<=
+    \commentaire{Première règle des sommations}
+    (((n-1)-0+1) \times 1) + 1
+    \<=
+    \commentaire{Simplification}
+    n + 1
+    \<\Rightarrow
+    \commentaire{Donc}
+    \frac{1}{2}n \leq C^A_{worst}(n) = n + 1 \leq 2n $ $ {\forall n \geq 1}
+    \<\in
+    \commentaire{Définition de $\Theta$ avec $c_1 = \frac{1}{2}$, $c_2 = 2$ et $n_0 = 1$  }
+    \Theta(n)
+\end{deriv}
 \end{document} 
