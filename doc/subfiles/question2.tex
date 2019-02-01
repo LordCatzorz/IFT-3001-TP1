@@ -80,73 +80,76 @@ $C(3^0) = 0$
 
 Résolvons:
 \begin{deriv}
-    C\pars{3^k}
-    \<=
-    \commentaire{$1^{ere}$ induction}
-    2 \cdot C\pars{3^{k-1}}+3^k
-    \<=
-    \commentaire{$2^e$ induction}
-    2 \cdot \crochs{2 \cdot C\pars{3^{k-2}}+3^{k-1}} +3^k
-    \<=
-    \commentaire{Simplification}
-    2^2 \cdot C\pars{3^{k-2}}+ 3^{k-1} + 3^k
-    \<=
-    \commentaire{$3^e$ induction}
-    2^2 \cdot \crochs{2 \cdot C\pars{3^{k-3}}+3^{k-2}} + 3^{k-1} + 3^k
-    \<=
-    \commentaire{Simplification}
-    2^3 \cdot C\pars{3^{k-3}} + 3^{k-2} + 3^{k-1} + 3^k
-    \<=
-    \commentaire{Suite}
-    ...
-    \<=
-    \commentaire{$i^e$ induction}
-    2^i \cdot C\pars{3^{k-i}} + 3^{k-(i-1)} + ... + 3^{k-2} + 3^{k-1} + 3^k
-    \<=
-    \commentaire{Suite}
-    ...
-    \<=
-    \commentaire{$k^e$ induction}
-    2^k \cdot C\pars{3^{k-k}} + \sum_{i=k-(k-1)}^{k} 3^i
-    \<=
-    \commentaire{Simplification}
-    2^k \cdot C\pars{3^{0}} + \sum_{i=1}^{k} 3^i
-    \<=
-    \commentaire{Simplification}
-    2^k \cdot C\pars{1} + \sum_{i=1}^{k} 3^i
-    \<=
-    \commentaire{Valeur de base}
-    2^k \cdot 0 + \sum_{i=1}^{k} 3^i
-    \<=
-    \commentaire{Simplification}
-    \sum_{i=1}^{k} 3^i
-    \<=
-    \commentaire{Ajout de valeurs neutres}
-    \sum_{i=1}^{k} 3^i + 3^0 - 3^0
-    \<=
-    \commentaire{Simplification + Insérer addition dans sommation}
-    \sum_{i=0}^{k} 3^i - 1
-    \<=
-    \commentaire{Règle de sommation}
-    \frac{3^{k+1} - 1}{3 - 1} - 1
-    \<=
-    \commentaire{Simplification}
-    \frac{3^{k+1} - 1}{2} - \frac{2}{2}
-    \<=
-    \commentaire{Simplification}
-    \frac{3^{k+1} - 1 - 2}{2}
-    \<=
-    \commentaire{Simplification}
-    \frac{3^{k+1} - 3}{2}
-    \<=
-    \commentaire{Extraction exposant}
-    \frac{3 \cdot 3^k - 3}{2}
-    \<=
-    \commentaire{Définition de $3^k$}
-    \frac{3n - 3}{2}
-    \<=
-    \commentaire{Réécriture}
-    \frac{3}{2}n - \frac{3}{2}
+  C\pars{n}
+  \<=
+  \commentaire{Définition de $3^k$}
+  C\pars{3^k}
+  \<=
+  \commentaire{$1^{ere}$ induction}
+  2 \cdot C\pars{3^{k-1}}+3^k
+  \<=
+  \commentaire{$2^e$ induction}
+  2 \cdot \crochs{2 \cdot C\pars{3^{k-2}}+3^{k-1}} +3^k
+  \<=
+  \commentaire{Simplification}
+  2^2 \cdot C\pars{3^{k-2}}+ 3^{k-1} + 3^k
+  \<=
+  \commentaire{$3^e$ induction}
+  2^2 \cdot \crochs{2 \cdot C\pars{3^{k-3}}+3^{k-2}} + 3^{k-1} + 3^k
+  \<=
+  \commentaire{Simplification}
+  2^3 \cdot C\pars{3^{k-3}} + 3^{k-2} + 3^{k-1} + 3^k
+  \<=
+  \commentaire{Suite}
+  ...
+  \<=
+  \commentaire{$i^e$ induction}
+  2^i \cdot C\pars{3^{k-i}} + 3^{k-(i-1)} + ... + 3^{k-2} + 3^{k-1} + 3^k
+  \<=
+  \commentaire{Suite}
+  ...
+  \<=
+  \commentaire{$k^e$ induction}
+  2^k \cdot C\pars{3^{k-k}} + \sum_{i=k-(k-1)}^{k} 3^i
+  \<=
+  \commentaire{Simplification}
+  2^k \cdot C\pars{3^{0}} + \sum_{i=1}^{k} 3^i
+  \<=
+  \commentaire{Simplification}
+  2^k \cdot C\pars{1} + \sum_{i=1}^{k} 3^i
+  \<=
+  \commentaire{Valeur de base}
+  2^k \cdot 0 + \sum_{i=1}^{k} 3^i
+  \<=
+  \commentaire{Simplification}
+  \sum_{i=1}^{k} 3^i
+  \<=
+  \commentaire{Ajout de valeurs neutres}
+  \sum_{i=1}^{k} 3^i + 3^0 - 3^0
+  \<=
+  \commentaire{Simplification + Insérer addition dans sommation}
+  \sum_{i=0}^{k} 3^i - 1
+  \<=
+  \commentaire{Règle de sommation}
+  \frac{3^{k+1} - 1}{3 - 1} - 1
+  \<=
+  \commentaire{Simplification}
+  \frac{3^{k+1} - 1}{2} - \frac{2}{2}
+  \<=
+  \commentaire{Simplification}
+  \frac{3^{k+1} - 1 - 2}{2}
+  \<=
+  \commentaire{Simplification}
+  \frac{3^{k+1} - 3}{2}
+  \<=
+  \commentaire{Extraction exposant}
+  \frac{3 \cdot 3^k - 3}{2}
+  \<=
+  \commentaire{Définition de $3^k$}
+  \frac{3n - 3}{2}
+  \<=
+  \commentaire{Réécriture}
+  \frac{3}{2}n - \frac{3}{2}
 \end{deriv}
 
 \end{document}
