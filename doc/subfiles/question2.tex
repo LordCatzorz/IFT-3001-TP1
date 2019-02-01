@@ -65,6 +65,7 @@
   \end{cases}
 \]
 
+\section*{Résolution récurence}
 Nous allons commencer par essayer de résoudre cette récurrence, que pour les 
 occurances de $n = 3^k$ $\forall k \in \mathbb{N}$
 
@@ -151,5 +152,54 @@ Résolvons:
   \commentaire{Réécriture}
   \frac{3}{2}n - \frac{3}{2}
 \end{deriv}
+
+\section*{Notation asymptotique}
+Nous pouvons trouver la notation asymptotique:
+
+Borne Supérieure:
+\begin{deriv}
+  \frac{3}{2}n - \frac{3}{2}
+  \<\leq
+  \commentaire{En ajoutant $\frac{3}{2}$}
+  \frac{3}{2}n
+  \<\in 
+  \commentaire{Définition du $\BigO$ avec $c_2 = \frac{3}{2}$}
+  \BigO\pars{n}
+\end{deriv}
+
+Borne inférieure:
+\begin{deriv}
+  \frac{3}{2}n - \frac{3}{2}
+  \<=
+  \commentaire{Réécriture}
+  \frac{3n}{2} - \frac{3}{2}
+  \<\geq
+  \commentaire{En retirant $\frac{n}{2} - \frac{3}{2}$}
+  \frac{3n}{2} - \frac{3}{2} - \pars{\frac{n}{2} - \frac{3}{2}}
+  \<=
+  \commentaire{Appliquer la négation sur la parenthèse}
+  \frac{3n}{2} - \frac{3}{2} - \frac{n}{2} + \frac{3}{2}
+  \<=
+  \commentaire{Appliquer la négation}
+  \frac{3n}{2} - \frac{n}{2}
+  \<=
+  \commentaire{$-\frac{3}{2} + \frac{3}{2} = 0$}
+  \frac{3n - n}{2}
+  \<=
+  \commentaire{Fusionner la soustraction de même base}
+  \frac{2n}{2}
+  \<=
+  \commentaire{Simplification}
+  n
+  \<\in
+  \commentaire{Définition de $\Omega$ avec $c_1 = 1$}
+  \Omega\pars{n}
+\end{deriv}
+
+Donc comme $\frac{3}{2}n - \frac{3}{2} \in \Omega \pars {n}$ et $\frac{3}{2}n - \frac{3}{2} \in \BigO \pars{n}$,
+nous pouvons conclure que $\frac{3}{2}n - \frac{3}{2} \in \Theta\pars{n}$.
+
+Nous pouvons aussi conclure que $C\pars{n} \in \Theta\pars{n}$ pour $n = 3^k$ $\forall k \in \mathbb{N}$
+
 
 \end{document}
