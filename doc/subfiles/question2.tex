@@ -1,56 +1,5 @@
 % !TeX root = ../main.tex
 \documentclass[class=article]{standalone}
-\usepackage{amsmath}
-\usepackage{amsthm}
-\usepackage{amssymb}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Environnement deriv pour les dérivations
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newlength{\indentationFormule}
-\setlength{\indentationFormule}{1.3em}
-\newlength{\indentationTotaleFormule}
-\newlength{\indentationCommentaire}
-\setlength{\indentationCommentaire}{4em}
-\newlength{\indentationDerivation}
-\newlength{\largeurLangle}
-\settowidth{\largeurLangle}{$\langle$\hspace*{.4em}}
-\newlength{\largeurBoiteCommentaire}
-
-\newenvironment{deriv}[1][\leftmargini]%
-  {\setlength{\indentationDerivation}{#1}%
-    \setlength{\indentationTotaleFormule}{\indentationFormule}
-    \addtolength{\indentationTotaleFormule}{#1}
-    \setlength{\largeurBoiteCommentaire}{\linewidth}
-    \addtolength{\largeurBoiteCommentaire}{-\indentationFormule}
-    \addtolength{\largeurBoiteCommentaire}{-\indentationCommentaire}
-    \addtolength{\largeurBoiteCommentaire}{-\largeurLangle}
-    \addtolength{\largeurBoiteCommentaire}{-\indentationDerivation}
-    \begin{list}{}{\setlength{\leftmargin}{\indentationTotaleFormule}}
-                   \setlength{\baselineskip}{1.3\baselineskip}
-                   \item$}%
-   {\hbox{}$\end{list}}  % \hbox{} évite des underfull lors d'usages
-                         % sans \< et sans \commentaire (et avec
-                         % des \\ pour changer de ligne).
-
-\newcommand{\<}[1]{\\\hspace*{-\indentationFormule}\makebox(0,0)[bl]{$#1$}\hspace*{\indentationFormule}}
-
-\newcommand{\commentaire}[1]{\hspace*{\indentationCommentaire}\langle\hspace*{.4em}%
-    \begin{minipage}[t]{\largeurBoiteCommentaire}%
-        #1 $\rangle$\\\hbox{}% Bizarre. Pourquoi ça prend \\ ici et aussi à la ligne suivante ?
-                           % Sans \hbox{}, il y a des underfull.
-    \end{minipage}\\[-1ex] % Sans ces deux \\, l'espace après un commentaire n'est pas le même quand
-                           % le commentaire a plus d'une ligne.
-}
-
-\newcommand{\commentaireligne}[1]{$\mm ---#1$}{}
-\newcommand{\sepcom}{\hspace{.4em}\&\hspace{.4em}\,}
-%% Autre
-\newcommand{\BigO}{\mathcal{O}}
-\providecommand{\floor}[1]{\left \lfloor #1 \right \rfloor }
-\providecommand{\pars}[1]{\left ( #1 \right ) }
-\providecommand{\crochs}[1]{\left [ #1 \right ] }
 
 \begin{document}
 \centerline{\Huge \bf Question 2}
@@ -111,25 +60,25 @@ Résolvons:
   ...
   \<=
   \commentaire{$k^e$ induction}
-  2^k \cdot C\pars{3^{k-k}} + \sum_{i=k-(k-1)}^{k} 3^i
+  2^k \cdot C\pars{3^{k-k}} + \sum\limits_{i=k-(k-1)}^{k} 3^i
   \<=
   \commentaire{Simplification}
-  2^k \cdot C\pars{3^{0}} + \sum_{i=1}^{k} 3^i
+  2^k \cdot C\pars{3^{0}} + \sum\limits_{i=1}^{k} 3^i
   \<=
   \commentaire{Simplification}
-  2^k \cdot C\pars{1} + \sum_{i=1}^{k} 3^i
+  2^k \cdot C\pars{1} + \sum\limits_{i=1}^{k} 3^i
   \<=
   \commentaire{Valeur de base}
-  2^k \cdot 0 + \sum_{i=1}^{k} 3^i
+  2^k \cdot 0 + \sum\limits_{i=1}^{k} 3^i
   \<=
   \commentaire{Simplification}
-  \sum_{i=1}^{k} 3^i
+  \sum\limits_{i=1}^{k} 3^i
   \<=
   \commentaire{Ajout de valeurs neutres}
-  \sum_{i=1}^{k} 3^i + 3^0 - 3^0
+  \sum\limits_{i=1}^{k} 3^i + 3^0 - 3^0
   \<=
   \commentaire{Simplification + Insérer addition dans sommation}
-  \sum_{i=0}^{k} 3^i - 1
+  \sum\limits_{i=0}^{k} 3^i - 1
   \<=
   \commentaire{Règle de sommation}
   \frac{3^{k+1} - 1}{3 - 1} - 1
@@ -163,7 +112,7 @@ Borne Supérieure:
   \commentaire{En ajoutant $\frac{3}{2}$}
   \frac{3}{2}n
   \<\in 
-  \commentaire{Définition du $\BigO$ avec $c_2 = \frac{3}{2}$}
+  \commentaire{Définition du $\BigO$ avec $c_2 = \frac{3}{2}$ et $n_0 = 0$}
   \BigO\pars{n}
 \end{deriv}
 
@@ -192,7 +141,7 @@ Borne inférieure:
   \commentaire{Simplification}
   n
   \<\in
-  \commentaire{Définition de $\Omega$ avec $c_1 = 1$}
+  \commentaire{Définition de $\Omega$ avec $c_1 = 1$ et $n_0 = 0$}
   \Omega\pars{n}
 \end{deriv}
 
@@ -201,5 +150,35 @@ nous pouvons conclure que $\frac{3}{2}n - \frac{3}{2} \in \Theta\pars{n}$.
 
 Nous pouvons aussi conclure que $C\pars{n} \in \Theta\pars{n}$ pour $n = 3^k$ $\forall k \in \mathbb{N}$
 
+\section*{Démonstration de la validité pour tout entier n}
+Nous pouvons utiliser la règles de l'harmonie pour montrer que la notation asymptotique que
+nous avons trouver pour les $n = 3^k$ est valide $\forall n \in \mathbb{N}$. Pour ce faire, nous devons montrer 3 choses :
+
+\begin{enumerate}
+  \item $\frac{3}{2}n - \frac{3}{2}$ doit être éventuellement non décroissante. 
+  
+  C'est le cas puisque c'est une fonction linéaire avec une pente positive.
+
+  \item L'ordre de croissance, doit être une fonction harmonieuse, donc que $2n \in \Theta\pars{n}$.
+  
+  C'est le cas puisque 
+
+  \begin{deriv}
+    \lim\limits_{x\to\infty} \frac{2n}{n}
+    \<=
+    \commentaire{Simplification}
+    \lim\limits_{x\to\infty} 2
+    \<=
+    \commentaire{Application de la limit}
+    2 \commentaire{Valeur constante $> 0$, $2n \in \Theta\pars{n}$}
+  \end{deriv} 
+
+  \item On doit avoir $C\pars{n} \in \Theta\pars{n}$ pour $n = b^k$ $\forall k \in \mathbb{N}$
+  
+  C'est le cas puisque nous l'avons démontré dans la section "Notation asymptotique" avec 
+  $b = 3$.
+\end{enumerate}
+
+Puisque nous répondont au trois critères, nous pouvons conclure que $C(n) \in \Theta\pars{n}$ $\forall n \in \mathbb{N}$.
 
 \end{document}
