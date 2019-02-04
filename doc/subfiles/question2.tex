@@ -16,7 +16,7 @@
 
 \section*{Résolution récurrence}
 Nous allons commencer par essayer de résoudre cette récurrence, que pour les 
-occurrences de $n = 3^k$ $\forall k \in \mathbb{N}$
+occurrences de $n = 3^k$ $\forall k \in \mathbb{N}$. Donc $k = log_3 n$
 
 Nous aurons alors 
 
@@ -60,46 +60,92 @@ Résolvons:
   ...
   \<=
   \commentaire{$k^e$ induction}
-  2^k \cdot C\pars{3^{k-k}} + \sum\limits_{i=k-(k-1)}^{k}\pars{i3^i}
+  2^k \cdot C\pars{3^{k-k}} + 2^{k-1} \cdot 3^{k-(k-1)} + ... + 2^{2} \cdot 3^{k-2} +  2 \cdot  3^{k-1} + 3^k
   \<=
   \commentaire{Simplification}
-  2^k \cdot C\pars{3^{0}} + \sum\limits_{i=1}^{k}\pars{i3^i}
+  2^k \cdot C\pars{3^{0}} + 2^{k-1} \cdot 3^{1} + ... + 2^{2} \cdot 3^{k-2} +  2^{1} \cdot  3^{k-1} + 2^{0} \cdot 3^k
+  %2^k \cdot C\pars{3^{0}} + \sum\limits_{i=k-(k-1)}^{k}\pars{i3^i}
   \<=
   \commentaire{Simplification}
-  2^k \cdot C\pars{1} + \sum\limits_{i=1}^{k}\pars{i3^i}
+  2^k \cdot C\pars{3^{0}} + \sum\limits_{i=1}^{k}\pars{2^{k-i} \cdot 3^i}
+  \<=
+  \commentaire{Simplification}
+  2^k \cdot C\pars{1} + \sum\limits_{i=1}^{k}\pars{2^{k-i} \cdot 3^i}
   \<=
   \commentaire{Valeur de base}
-  2^k \cdot 0 + \sum\limits_{i=1}^{k}\pars{i3^i}
+  2^k \cdot 0 + \sum\limits_{i=1}^{k}\pars{2^{k-i} \cdot 3^i}
   \<=
   \commentaire{Simplification}
-  \sum\limits_{i=1}^{k}\pars{i3^i}
+  \sum\limits_{i=1}^{k}\pars{2^{k-i} \cdot 3^i}
   \<=
-  \commentaire{>A CORRIGER À PARTIR DICI"!!!! Ajout de valeurs neutres}
-  \sum\limits_{i=1}^{k} 3^i + 3^0 - 3^0
+  \commentaire{Règle expostant}
+  \sum\limits_{i=1}^{k}\pars{\frac{2^{k}}{2^{i}} \cdot 3^i}
   \<=
-  \commentaire{Simplification + insérer addition dans sommation}
-  \sum\limits_{i=0}^{k} 3^i - 1
-  \<=
-  \commentaire{Règle de sommation}
-  \frac{3^{k+1} - 1}{3 - 1} - 1
+  \commentaire{Séparer fraction}
+  \sum\limits_{i=1}^{k}\pars{2^{k} \cdot \frac{1}{2^{i}} \cdot 3^i}
   \<=
   \commentaire{Simplification}
-  \frac{3^{k+1} - 1}{2} - \frac{2}{2}
+  \sum\limits_{i=1}^{k}\pars{2^{k} \cdot \frac{3^i}{2^{i}}}
   \<=
   \commentaire{Simplification}
-  \frac{3^{k+1} - 1 - 2}{2}
+  \sum\limits_{i=1}^{k}\pars{2^{k} \cdot \pars{\frac{3}{2}}^i}
+  \<=
+  \commentaire{Extraire produit constant de la sommation}
+  2^{k} \cdot \sum\limits_{i=1}^{k}\pars{\pars{\frac{3}{2}}^i}
+  \<=
+  \commentaire{Ajuster borne de la sommation}
+  2^{k} \cdot \pars{\sum\limits_{i=0}^{k}\pars{\pars{\frac{3}{2}}^i} - \pars{\frac{3}{2}}^0}
   \<=
   \commentaire{Simplification}
-  \frac{3^{k+1} - 3}{2}
+  2^{k} \cdot \pars{\sum\limits_{i=0}^{k}\pars{\pars{\frac{3}{2}}^i} - 1}
   \<=
-  \commentaire{Extraction exposant}
-  \frac{3 \cdot 3^k - 3}{2}
+  \commentaire{Application de la règle de sommation}
+  2^{k} \cdot \pars{\frac{\pars{\frac{3}{2}}^{k+1}-1}{\frac{3}{2} - 1} - 1}
   \<=
-  \commentaire{Définition de $3^k$}
-  \frac{3n - 3}{2}
+  \commentaire{Simplification}
+  2^{k} \cdot \pars{\frac{\pars{\frac{3}{2}}^{k+1}-1}{\frac{1}{2}} - 1}
   \<=
-  \commentaire{Réécriture}
-  \frac{3}{2}n - \frac{3}{2}
+  \commentaire{Simplification}
+  2^{k} \cdot \pars{2\cdot\pars{\pars{\frac{3}{2}}^{k+1}-1} - 1}
+  \<=
+  \commentaire{Simplification}
+  2^{k} \cdot \pars{2\cdot{\pars{\frac{3}{2}}^{k+1}-2} - 1}
+  \<=
+  \commentaire{Simplification}
+  2^{k} \cdot \pars{2\cdot{\pars{\frac{3}{2}}^{k+1}-3}}
+  \<=
+  \commentaire{Extraire un $\frac{3}{2}$}
+  2^{k} \cdot \pars{2\cdot \frac{3}{2} \cdot {\pars{\frac{3}{2}}^{k}-3}}
+  \<=
+  \commentaire{Simplification}
+  2^{k} \cdot \pars{3 \cdot {\pars{\frac{3}{2}}^{k}-3}}
+  \<=
+  \commentaire{Appliquer $k$ sur $\frac{3}{2}$}
+  2^{k} \cdot \pars{3 \cdot \frac{3^{k}}{2^{k}}-3}
+  \<=
+  \commentaire{Appliquer multiplication $2^k$}
+  2^{k} \cdot 3 \cdot \frac{3^{k}}{2^{k}}-2^{k} \cdot 3
+  \<=
+  \commentaire{Simplification}
+  3 \cdot 3^{k}-2^{k} \cdot 3
+  \<=
+  \commentaire{Définition de $n$ et de $k$}
+  3n-2^{log_3(n)} \cdot 3
+  \<=
+  \commentaire{Simplification}
+  3 \cdot \pars{n-2^{log_3(n)}}
+  \<=
+  \commentaire{Règle des log}
+  3 \cdot \pars{n-2^{log_3(2)log_2(n)}}
+  \<=
+  \commentaire{Règle des exposants}
+  3 \cdot \pars{n-\pars{2^{log_2(n)}}^{log_3(2)}}
+  \<=
+  \commentaire{Simplification}
+  3 \cdot \pars{n-n^{log_3(2)}}
+  \<\approx
+  \commentaire{Approximation du $log_3 2$}
+  3 \cdot \pars{n-n^{0.63}}
 \end{deriv}
 
 \section*{Notation asymptotique}
