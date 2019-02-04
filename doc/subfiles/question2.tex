@@ -42,39 +42,39 @@ Résolvons:
   2 \cdot \crochs{2 \cdot C\pars{3^{k-2}}+3^{k-1}} +3^k
   \<=
   \commentaire{Simplification}
-  2^2 \cdot C\pars{3^{k-2}}+ 3^{k-1} + 3^k
+  2^2 \cdot C\pars{3^{k-2}} + 2 \cdot 3^{k-1} + 3^k
   \<=
   \commentaire{$3^e$ induction}
-  2^2 \cdot \crochs{2 \cdot C\pars{3^{k-3}}+3^{k-2}} + 3^{k-1} + 3^k
+  2^2 \cdot \crochs{2 \cdot C\pars{3^{k-3}} + 3^{k-2}} + 2 \cdot 3^{k-1} + 3^k
   \<=
   \commentaire{Simplification}
-  2^3 \cdot C\pars{3^{k-3}} + 3^{k-2} + 3^{k-1} + 3^k
+  2^3 \cdot C\pars{3^{k-3}} + 2^{2} \cdot 3^{k-2} + 2 \cdot 3^{k-1} + 3^k
   \<=
   \commentaire{Suite}
   ...
   \<=
   \commentaire{$i^e$ induction}
-  2^i \cdot C\pars{3^{k-i}} + 3^{k-(i-1)} + ... + 3^{k-2} + 3^{k-1} + 3^k
+  2^i \cdot C\pars{3^{k-i}} + 2^{i-1} \cdot 3^{k-(i-1)} + ... + 2^{2} \cdot 3^{k-2} +  2 \cdot  3^{k-1} + 3^k
   \<=
   \commentaire{Suite}
   ...
   \<=
   \commentaire{$k^e$ induction}
-  2^k \cdot C\pars{3^{k-k}} + \sum\limits_{i=k-(k-1)}^{k} 3^i
+  2^k \cdot C\pars{3^{k-k}} + \sum\limits_{i=k-(k-1)}^{k}\pars{i3^i}
   \<=
   \commentaire{Simplification}
-  2^k \cdot C\pars{3^{0}} + \sum\limits_{i=1}^{k} 3^i
+  2^k \cdot C\pars{3^{0}} + \sum\limits_{i=1}^{k}\pars{i3^i}
   \<=
   \commentaire{Simplification}
-  2^k \cdot C\pars{1} + \sum\limits_{i=1}^{k} 3^i
+  2^k \cdot C\pars{1} + \sum\limits_{i=1}^{k}\pars{i3^i}
   \<=
   \commentaire{Valeur de base}
-  2^k \cdot 0 + \sum\limits_{i=1}^{k} 3^i
+  2^k \cdot 0 + \sum\limits_{i=1}^{k}\pars{i3^i}
   \<=
   \commentaire{Simplification}
-  \sum\limits_{i=1}^{k} 3^i
+  \sum\limits_{i=1}^{k}\pars{i3^i}
   \<=
-  \commentaire{Ajout de valeurs neutres}
+  \commentaire{>A CORRIGER À PARTIR DICI"!!!! Ajout de valeurs neutres}
   \sum\limits_{i=1}^{k} 3^i + 3^0 - 3^0
   \<=
   \commentaire{Simplification + insérer addition dans sommation}

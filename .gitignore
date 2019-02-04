@@ -39,3 +39,5 @@
 
 #vs COde
 .vscode/
+doc/main.fdb_latexmk
+doc/main.fls
