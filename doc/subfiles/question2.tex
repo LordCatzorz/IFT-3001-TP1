@@ -64,7 +64,6 @@ Résolvons:
   \<=
   \commentaire{Simplification}
   2^k \cdot C\pars{3^{0}} + 2^{k-1} \cdot 3^{1} + ... + 2^{2} \cdot 3^{k-2} +  2^{1} \cdot  3^{k-1} + 2^{0} \cdot 3^k
-  %2^k \cdot C\pars{3^{0}} + \sum\limits_{i=k-(k-1)}^{k}\pars{i3^i}
   \<=
   \commentaire{Simplification}
   2^k \cdot C\pars{3^{0}} + \sum\limits_{i=1}^{k}\pars{2^{k-i} \cdot 3^i}
@@ -133,19 +132,19 @@ Résolvons:
   3n-2^{log_3(n)} \cdot 3
   \<=
   \commentaire{Simplification}
-  3 \cdot \pars{n-2^{log_3(n)}}
+  3 \pars{n-2^{log_3(n)}}
   \<=
   \commentaire{Règle des log}
-  3 \cdot \pars{n-2^{log_3(2)log_2(n)}}
+  3 \pars{n-2^{log_3(2)log_2(n)}}
   \<=
   \commentaire{Règle des exposants}
-  3 \cdot \pars{n-\pars{2^{log_2(n)}}^{log_3(2)}}
+  3 \pars{n-\pars{2^{log_2(n)}}^{log_3(2)}}
   \<=
   \commentaire{Simplification}
-  3 \cdot \pars{n-n^{log_3(2)}}
+  3 \pars{n-n^{log_3(2)}}
   \<\approx
   \commentaire{Approximation du $log_3 2$}
-  3 \cdot \pars{n-n^{0.63093}}
+  3 \pars{n-n^{0.63093}}
 \end{deriv}
 
 \section*{Notation asymptotique}
@@ -153,46 +152,43 @@ Nous pouvons trouver la notation asymptotique:
 
 Borne supérieure:
 \begin{deriv}
-  \frac{3}{2}n - \frac{3}{2}
+  3 \pars{n-n^{log_3(2)}}
+  \<=
+  \commentaire{Réécriture}
+  3n-3n^{log_3(2)}
   \<\leq
-  \commentaire{En ajoutant $\frac{3}{2}$}
-  \frac{3}{2}n
+  \commentaire{En ajoutant $3n^{log_3(2)}$}
+  3n-3n^{log_3(2)}+3n^{log_3(2)}
+  \<=
+  \commentaire{Simplification}
+  3n
   \<\in 
-  \commentaire{Définition du $\BigO$ avec $c_2 = \frac{3}{2}$ et $n_0 = 0$}
+  \commentaire{Définition du $\BigO$ avec $c_2 = 3$ et $n_0 = 0$}
   \BigO\pars{n}
 \end{deriv}
 
 Borne inférieure:
 \begin{deriv}
-  \frac{3}{2}n - \frac{3}{2}
+  3 \pars{n-n^{log_3(2)}}
   \<=
   \commentaire{Réécriture}
-  \frac{3n}{2} - \frac{3}{2}
+  3n-3n^{log_3(2)}
   \<\geq
-  \commentaire{En retirant $\frac{n}{2} - \frac{3}{2}$}
-  \frac{3n}{2} - \frac{3}{2} - \pars{\frac{n}{2} - \frac{3}{2}}
+  \commentaire{En retirant $n - 3n^{log_3(2)}$. Vrai $\forall n \geq 20$}
+  3n-3n^{log_3(2)} - \pars{n - 3n^{log_3(2)}}
   \<=
   \commentaire{Appliquer la négation sur la parenthèse}
-  \frac{3n}{2} - \frac{3}{2} - \frac{n}{2} + \frac{3}{2}
+  3n-3n^{log_3(2)} - n + 3n^{log_3(2)}
   \<=
   \commentaire{Appliquer la négation}
-  \frac{3n}{2} - \frac{n}{2}
-  \<=
-  \commentaire{$-\frac{3}{2} + \frac{3}{2} = 0$}
-  \frac{3n - n}{2}
-  \<=
-  \commentaire{Fusionner la soustraction de même base}
-  \frac{2n}{2}
-  \<=
-  \commentaire{Simplification}
-  n
+  2n
   \<\in
-  \commentaire{Définition de $\Omega$ avec $c_1 = 1$ et $n_0 = 0$}
+  \commentaire{Définition de $\Omega$ avec $c_1 = 2$ et $n_0 = 20$}
   \Omega\pars{n}
 \end{deriv}
 
-Donc comme $\frac{3}{2}n - \frac{3}{2} \in \Omega \pars {n}$ et $\frac{3}{2}n - \frac{3}{2} \in \BigO \pars{n}$,
-nous pouvons conclure que $\frac{3}{2}n - \frac{3}{2} \in \Theta\pars{n}$.
+Donc comme $3 \pars{n-n^{log_3(2)}} \in \Omega \pars {n}$ et $3 \pars{n-n^{log_3(2)}} \in \BigO \pars{n}$,
+nous pouvons conclure que $3 \pars{n-n^{log_3(2)}} \in \Theta\pars{n}$.
 
 Nous pouvons aussi conclure que $C\pars{n} \in \Theta\pars{n}$ pour $n = 3^k$ $\forall k \in \mathbb{N}$
 
@@ -201,9 +197,9 @@ Nous pouvons utiliser la règle de l'harmonie pour montrer que la notation asymp
 nous avons trouvé pour les $n = 3^k$ est valide $\forall n \in \mathbb{N}$. Pour ce faire, nous devons montrer 3 choses :
 
 \begin{enumerate}
-  \item $\frac{3}{2}n - \frac{3}{2}$ doit être éventuellement non décroissante. 
+  \item $3 \pars{n-n^{log_3(2)}}$ doit être éventuellement non décroissante. 
   
-  C'est le cas puisque c'est une fonction linéaire avec une pente positive.
+  C'est le cas, en particulier lorsque $n \geq 1$.
 
   \item L'ordre de croissance, doit être une fonction harmonieuse, donc que $2n \in \Theta\pars{n}$.
   
