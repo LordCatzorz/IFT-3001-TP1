@@ -10,4 +10,25 @@ La taille de l'instance est $n$, la valeur fournie en paramètre.
 \subsection*{Opérateur de base}
 Nous allons prendre comme opérateur de base les deux additions de c avec 1 ($c+1$).
 
+Nous pouvons prendre deux opérateurs, puisqu'ils sont chacun appelé le plus souvent (à un constante près)
+de chacun des deux boucles.
+
+Le nombre de fois que ces opérateurs sont atteind dépend uniquement de $n$.
+
+Le nombre de fois que les opérateurs de bases sonnt appeler peut être donné par la sommation suivante:
+
+$C\pars{n} = \pars{\sum\limits_{i=1}^n \sum\limits_{j=i^3}^{n^3}1} + \pars{\sum\limits_{i=1}^{\floor{\sqrt{n}}} 1}$
+
+Résolvons cette équation.
+
+\begin{deriv}
+    C\pars{n}
+    \<=
+    \commentaire{Définition de $C\pars{n}$}
+    \pars{\sum\limits_{i=1}^n \sum\limits_{j=i^3}^{n^3}1} + \pars{\sum\limits_{i=1}^{\floor{\sqrt{n}}} 1}
+    \<=
+    \commentaire{Sommation d'une constante}
+    \pars{\sum\limits_{i=1}^n \pars{\pars{n^3 - i^3 + 1} \cdot 1}} + \pars{\pars{\floor{\sqrt{n}} - 1 + 1} \cdot 1}
+\end{deriv}
+
 \end{document}
