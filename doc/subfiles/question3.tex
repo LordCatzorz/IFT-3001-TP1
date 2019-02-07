@@ -29,6 +29,21 @@ Résolvons cette équation.
     \<=
     \commentaire{Sommation d'une constante}
     \pars{\sum\limits_{i=1}^n \pars{\pars{n^3 - i^3 + 1} \cdot 1}} + \pars{\pars{\floor{\sqrt{n}} - 1 + 1} \cdot 1}
+    \<=
+    \commentaire{Simplification}
+    \sum\limits_{i=1}^n \pars{n^3 - i^3 + 1} + \floor{\sqrt{n}}
+    \<=
+    \commentaire{Distribution de la sommation}
+    \sum\limits_{i=1}^n \pars{n^3} - \sum\limits_{i=1}^n \pars{i^3} + \sum\limits_{i=1}^n \pars{1} + \floor{\sqrt{n}}
+    \<=
+    \commentaire{Sommations de constantes}
+    (n - 1 + 1) \cdot n^3 - \sum\limits_{i=1}^n \pars{i^3} + (n - 1 + 1) \cdot 1 + \floor{\sqrt{n}}
+    \<=
+    \commentaire{Simplification}
+    n \cdot n^3 - \sum\limits_{i=1}^n \pars{i^3} + n+ \floor{\sqrt{n}}
+    \<=
+    \commentaire{Simplification}
+    n^4 - \sum\limits_{i=1}^n \pars{i^3} + n+ \floor{\sqrt{n}}
 \end{deriv}
 
 \end{document}
