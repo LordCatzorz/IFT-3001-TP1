@@ -32,18 +32,104 @@ Résolvons cette équation.
     \<=
     \commentaire{Simplification}
     \sum\limits_{i=1}^n \pars{n^3 - i^3 + 1} + \floor{\sqrt{n}}
-    \<=
-    \commentaire{Distribution de la sommation}
-    \sum\limits_{i=1}^n \pars{n^3} - \sum\limits_{i=1}^n \pars{i^3} + \sum\limits_{i=1}^n \pars{1} + \floor{\sqrt{n}}
-    \<=
-    \commentaire{Sommations de constantes}
-    (n - 1 + 1) \cdot n^3 - \sum\limits_{i=1}^n \pars{i^3} + (n - 1 + 1) \cdot 1 + \floor{\sqrt{n}}
-    \<=
-    \commentaire{Simplification}
-    n \cdot n^3 - \sum\limits_{i=1}^n \pars{i^3} + n+ \floor{\sqrt{n}}
-    \<=
-    \commentaire{Simplification}
-    n^4 - \sum\limits_{i=1}^n \pars{i^3} + n+ \floor{\sqrt{n}}
 \end{deriv}
+
+Nous allons borner la sommation par une intégrale, et profiter de ces bornes pour évaluer le $\floor{\sqrt{n}}$
+
+La sommation est non croissante.
+
+Avec $f(i) = n^3 - i^3 + 1$ :
+
+Résolvons $g(i) = \int\limits_1^{n+1} \pars{n^3 - x^3 + 1} dx$,
+soit la borne inférieure de $\sum\limits_{i=1}^n \pars{n^3 - i^3 + 1}$.
+
+
+\begin{deriv}
+    g(i)
+    \<=
+    \commentaire{Définition de $g(i)$}
+    \int\limits_1^{n+1} \pars{n^3 - x^3 + 1} dx
+    \<=
+    \commentaire{Distribution de l'intégration}
+    \int\limits_1^{n+1} n^3 dx
+    - \int\limits_1^{n+1} x^3 dx
+    + \int\limits_1^{n+1} 1 dx
+    \<=
+    \commentaire{Intégration}
+    \intr{1}{n+1}{n^3x}
+    - \intr{1}{n+1}{\frac{x^4}{4}} dx
+    + \intr{1}{n+1}{x} dx
+    \<=
+    \commentaire{Évaluation}
+    \pars{n^3(n+1) - n^3(1)}
+    - \pars{\frac{\pars{n+1}^4}{4} - \frac{1^4}{4}}
+    + \pars{n+1 - 1}
+    \<=
+    \commentaire{Simplification}
+    \pars{n^4 +n^3 - n^3}
+    - \pars{\frac{\pars{n+1}^4-1}{4}}
+    + n
+    \<=
+    \commentaire{Simplification}
+    n^4 - \frac{\pars{n^2+2n+1}^2-1}{4} + n
+    \<=
+    \commentaire{Simplification}
+    n^4 - \frac{n^4+4n^3+6n^2+4n+1-1}{4} + n
+    \<=
+    \commentaire{Simplification}
+    n^4 - \frac{n^4+4n^3+6n^2+4n}{4} + n
+    \<=
+    \commentaire{Mettre sur la même base}
+    \frac{4n^4}{4} - \frac{n^4+4n^3+6n^2+4n}{4} + \frac{4n}{4}
+    \<=
+    \commentaire{Rammener sur la même division}
+    \frac{4n^4 - \pars{n^4+4n^3+6n^2+4n} + 4n}{4}
+    \<=
+    \commentaire{Distribuer la soustraction}
+    \frac{4n^4 - n^4 - 4n^3 - 6n^2 - 4n + 4n}{4}
+    \<=
+    \commentaire{Simplifier}
+    \frac{3n^4 - 4n^3 - 6n^2}{4}
+\end{deriv}
+
+Résolvons $h(i) = \int\limits_0^{n} \pars{n^3 - x^3 + 1} dx$,
+soit la borne supérieure de $\sum\limits_{i=1}^n \pars{n^3 - i^3 + 1}$.
+
+\begin{deriv}
+    h(i)
+    \<=
+    \commentaire{Définition de $h(i)$}
+    \int\limits_0^{n} \pars{n^3 - x^3 + 1} dx
+    \<=
+    \commentaire{Distribution de l'intégration}
+    \int\limits_0^{n} n^3 dx
+    - \int\limits_0^{n} x^3 dx
+    + \int\limits_0^{n} 1 dx
+    \<=
+    \commentaire{Intégration}
+    \intr{0}{n}{n^3x}
+    - \intr{0}{n}{\frac{x^4}{4}} dx
+    + \intr{0}{n}{x} dx
+    \<=
+    \commentaire{Évaluation}
+    \pars{n^3(n) - n^3(0)}
+    - \pars{\frac{\pars{n}^4}{4} - \frac{0^4}{4}}
+    + \pars{n - 0}
+    \<=
+    \commentaire{Simplification}
+    n^4 - \frac{n^4}{4} + n
+    \<=
+    \commentaire{Mettre sur la même base}
+    \frac{4n^4}{4} - \frac{n^4}{4} + \frac{n}{4}
+    \<=
+    \commentaire{Rammener sur la même division}
+    \frac{4n^4 - n^4 + 4n}{4}
+    \<=
+    \commentaire{Simplifier}
+    \frac{3n^4 + 4n}{4}
+\end{deriv}
+
+
+
 
 \end{document}
