@@ -4,50 +4,67 @@
 \begin{document}
 \centerline{\Huge \bf Question 3}
 \section*{Algorithme 1}
-\subsection*{Taille de l'instance}
+
+Nous allons séparer l'analyse de cet algorithme en deux blocs distincts. 
+Le bloc A portera sur les boucles \lstinline{for} imbriquées.
+Le bloc B portera sur la dernière boucle \lstinline{for}.
+Les opérations restantes sont des opérations atomiques et ne changeront donc pas l'analyse asymptotique.
+
+\subsection*{Bloc A}
+\subsubsection*{Taille de l'instance}
 La taille de l'instance est $n$, la valeur fournie en paramètre.
 
-\subsection*{Opérateur de base}
-Nous allons prendre comme opérateur de base les deux additions de c avec 1 ($c+1$).
+\subsubsection*{Opérateur de base}
+Nous allons prendre comme opérateur de base l'addition de c avec 1 ($c+1$).
 
-Nous pouvons prendre deux opérateurs, puisqu'ils sont chacun appelé le plus souvent (à un constante près)
-de chacun des deux boucles.
+Le nombre de fois que cet opérateur est atteint dépend uniquement de la valeur de $n$.
 
-Le nombre de fois que ces opérateurs sont atteind dépend uniquement de $n$.
+Le nombre de fois que l'opérateur de base est appelé peut être donné par la sommation suivante:
 
-Le nombre de fois que les opérateurs de bases sonnt appeler peut être donné par la sommation suivante:
-
-$C\pars{n} = \pars{\sum\limits_{i=1}^n \sum\limits_{j=i^3}^{n^3}1} + \pars{\sum\limits_{i=1}^{\floor{\sqrt{n}}} 1}$
+$C_A\pars{n} = \sum\limits_{i=1}^n \sum\limits_{j=i^3}^{n^3}1$
 
 Résolvons cette équation.
 
 \begin{deriv}
-    C\pars{n}
+    C_A\pars{n}
     \<=
-    \commentaire{Définition de $C\pars{n}$}
-    \pars{\sum\limits_{i=1}^n \sum\limits_{j=i^3}^{n^3}1} + \pars{\sum\limits_{i=1}^{\floor{\sqrt{n}}} 1}
+    \commentaire{Définition de $C_A\pars{n}$}
+    \sum\limits_{i=1}^n \sum\limits_{j=i^3}^{n^3}1
     \<=
     \commentaire{Sommation d'une constante}
-    \pars{\sum\limits_{i=1}^n \pars{\pars{n^3 - i^3 + 1} \cdot 1}} + \pars{\pars{\floor{\sqrt{n}} - 1 + 1} \cdot 1}
+    \sum\limits_{i=1}^n \pars{\pars{n^3 - i^3 + 1} \cdot 1}
     \<=
     \commentaire{Simplification}
-    \sum\limits_{i=1}^n \pars{n^3 - i^3 + 1} + \floor{\sqrt{n}}
+    \sum\limits_{i=1}^n \pars{n^3 - i^3 + 1}
 \end{deriv}
 
-Nous allons borner la sommation par une intégrale, et profiter de ces bornes pour évaluer le $\floor{\sqrt{n}}$
+
+\subsubsection*{Analyse asymptotique}
+Nous allons borner la sommation par une intégrale.
 
 La sommation est non croissante.
 
-Avec $f(i) = n^3 - i^3 + 1$ :
+Avec $f(i) = \sum\limits_{i=1}^n\pars{n^3 - i^3 + 1}$;
 
-Résolvons $g(i) = \int\limits_1^{n+1} \pars{n^3 - x^3 + 1} dx$,
-soit la borne inférieure de $\sum\limits_{i=1}^n \pars{n^3 - i^3 + 1}$.
+Avec $g(x) = \int\limits_1^{n+1} \pars{n^3 - x^3 + 1} dx$;
 
+Avec $h(x) = \int\limits_0^{n} \pars{n^3 - x^3 + 1} dx$;
+
+Résolvons $g(x) \leq f(i) \leq h(x)$, l'approximation par intégrale d'une sommation nulle part croissante:
+
+Résolvons $g(x) = \int\limits_1^{n+1} \pars{n^3 - x^3 + 1} dx$,
+soit une borne inférieure de $\sum\limits_{i=1}^n \pars{n^3 - i^3 + 1}$.
 
 \begin{deriv}
-    g(i)
+    C_A\pars{n}
     \<=
-    \commentaire{Définition de $g(i)$}
+    \commentaire{Définition de $C_A\pars{n}$}
+    f(i)
+    \<\geq
+    \commentaire{Définition de $g(x)$}
+    g(x)
+    \<=
+    \commentaire{Définition de $g(x)$}
     \int\limits_1^{n+1} \pars{n^3 - x^3 + 1} dx
     \<=
     \commentaire{Distribution de l'intégration}
@@ -90,15 +107,49 @@ soit la borne inférieure de $\sum\limits_{i=1}^n \pars{n^3 - i^3 + 1}$.
     \<=
     \commentaire{Simplifier}
     \frac{3n^4 - 4n^3 - 6n^2}{4}
+    \<=
+    \commentaire{Extraction de $frac{n^2}{4}$}
+    \frac{n^2}{4}\pars{3n^2 - 4n - 6}
+    \<\geq
+    \commentaire{$\forall n \geq 6$}
+    \frac{n^2}{4}\pars{3n^2 - 4n - n}
+    \<=
+    \commentaire{Simplification}
+    \frac{n^2}{4}\pars{3n^2 - 3n}
+    \<=
+    \commentaire{Simplification}
+    \frac{n^3}{4}\pars{3n - 3}
+    \<\geq
+    \commentaire{$\forall n \geq 3$}
+    \frac{n^3}{4}\pars{3n - n}
+    \<=
+    \commentaire{Simplification}
+    \frac{n^3}{4}\pars{2n}
+    \<=
+    \commentaire{Simplification}
+    \frac{2n^4}{4}
+    \<=
+    \commentaire{Simplification}
+    \frac{n^4}{2}
+    \<\in
+    \commentaire{Définition de $\Omega$}
+    \Omega\pars{n^4}
 \end{deriv}
 
-Résolvons $h(i) = \int\limits_0^{n} \pars{n^3 - x^3 + 1} dx$,
-soit la borne supérieure de $\sum\limits_{i=1}^n \pars{n^3 - i^3 + 1}$.
+
+Résolvons $h(x) = \int\limits_0^{n} \pars{n^3 - x^3 + 1} dx$,
+soit une borne supérieure de $\sum\limits_{i=1}^n \pars{n^3 - i^3 + 1}$.
 
 \begin{deriv}
-    h(i)
+    C_A\pars{n}
     \<=
-    \commentaire{Définition de $h(i)$}
+    \commentaire{Définition de $C_A\pars{n}$}
+    f(i)
+    \<\leq
+    \commentaire{Définition de $h(x)$}
+    h(x)
+    \<=
+    \commentaire{Définition de $h(x)$}
     \int\limits_0^{n} \pars{n^3 - x^3 + 1} dx
     \<=
     \commentaire{Distribution de l'intégration}
@@ -119,77 +170,106 @@ soit la borne supérieure de $\sum\limits_{i=1}^n \pars{n^3 - i^3 + 1}$.
     \commentaire{Simplification}
     n^4 - \frac{n^4}{4} + n
     \<=
-    \commentaire{Mettre sur la même base}
-    \frac{4n^4}{4} - \frac{n^4}{4} + \frac{n}{4}
-    \<=
-    \commentaire{Rammener sur la même division}
-    \frac{4n^4 - n^4 + 4n}{4}
-    \<=
-    \commentaire{Simplifier}
-    \frac{3n^4 + 4n}{4}
+    \commentaire{Simplification}
+    \frac{3}{4}n^4  + n
+    \<\leq
+    \commentaire{$\forall n \geq 0$}
+    \frac{3}{4}n^4
+    \<\in 
+    \commentaire{Définition de $\BigO$}
+    \BigO\pars{n^4}
 \end{deriv}
+
+Donc $C_A\pars{n} \in \Theta\pars{n^4}$, puisque $f(i) \in \Omega\pars{n^4}$ et $f(i) \in \BigO\pars{n^4}$
+
+
+\subsection*{Bloc B}
+\subsubsection*{Taille de l'instance}
+La taille de l'instance est $n$, la valeur fournie en paramètre.
+
+\subsubsection*{Opérateur de base}
+Nous allons prendre comme opérateur de base l'addition de c avec 1 ($c+1$).
+
+Le nombre de fois que cet opérateur est atteint dépend uniquement de la valeur de $n$.
+
+Le nombre de fois que l'opérateur de base est appelé peut être donné par la sommation suivante:
+
+$C_B\pars{n} = \sum\limits_{i=1}^{\floor{\sqrt{n}}} 1$
+
+Résolvons cette équation.
 
 \begin{deriv}
-    \lim\limits_{n\to\infty}\frac{g(i)}{n^4}
+    C_B\pars{n}
     \<=
-    \commentaire{Définition de $g(i)$}
-    \lim\limits_{n\to\infty}\frac{\frac{3n^4 - 4n^3 - 6n^2}{4}}{n^4}
+    \commentaire{Définition de $C_B\pars{n}$}
+    \sum\limits_{i=1}^{\floor{\sqrt{n}}} 1
     \<=
-    \commentaire{Simplification fraction}
-    \lim\limits_{n\to\infty}\frac{3n^4 - 4n^3 - 6n^2}{4n^4}
-    \<=
-    \commentaire{Hôspital}
-    \lim\limits_{n\to\infty}\frac{3\cdot4n^3 - 4\cdot3n^2 - 6\cdot2n}{4\cdot4n^3}
-    \<=
-    \commentaire{Hôspital}
-    \lim\limits_{n\to\infty}\frac{3\cdot4\cdot3n^2 - 4\cdot3\cdot2n - 6\cdot2\cdot1}{4\cdot4\cdot3n^2}
-    \<=
-    \commentaire{Hôspital}
-    \lim\limits_{n\to\infty}\frac{3\cdot4\cdot3\cdot2n - 4\cdot3\cdot2\cdot1}{4\cdot4\cdot3\cdot2n}
-    \<=
-    \commentaire{Hôspital}
-    \lim\limits_{n\to\infty}\frac{3\cdot4\cdot3\cdot2\cdot1}{4\cdot4\cdot3\cdot2\cdot1}
+    \commentaire{Sommation d'une constante}
+    \pars{\pars{\floor{\sqrt{n}} - 1 + 1} \cdot 1}
     \<=
     \commentaire{Simplification}
-    \lim\limits_{n\to\infty}\frac{3\cdot4!}{4\cdot4!}
-    \<=
-    \commentaire{Simplification}
-    \lim\limits_{n\to\infty}\frac{3}{4}
-    \<=
-    \commentaire{Application de la limite}
-    \frac{3}{4}
+    \floor{\sqrt{n}}
 \end{deriv}
 
-Donc $g(i)\in\Theta\pars{n^4}$
+\subsubsection*{Analyse asymptotique}
+En utilisant la définition de la fonction plancher, nous avons:
 
+$\sqrt{n} - 1 < C_B\pars{n} \leq \sqrt{n}$
+
+Utilisons ces inéquation pour trouver la notation asymptotique de $C_B\pars{n}$
+
+Trouvons $\Omega$
 
 \begin{deriv}
-    \lim\limits_{n\to\infty}\frac{h(i)}{n^4}
+    C_B\pars{n}
     \<=
-    \commentaire{Définition de $h(i)$}
-    \lim\limits_{n\to\infty}\frac{\frac{3n^4 + 4n}{4}}{n^4}
-    \<=
-    \commentaire{Simplification fraction}
-    \lim\limits_{n\to\infty}\frac{3n^4 + 4n}{4n^4}
-    \<=
-    \commentaire{Hôspital}
-    \lim\limits_{n\to\infty}\frac{3\cdot4n^3 + 4\cdot1}{4\cdot4n^3}
-    \<=
-    \commentaire{Simplification}
-    \lim\limits_{n\to\infty}\frac{12n^3}{16n^3}
-    \<=
-    \commentaire{Simplification des n}
-    \lim\limits_{n\to\infty}\frac{12}{16}
+    \commentaire{Définition de $C_B\pars{n}$}
+    \floor{\sqrt{n}}
+    \<>
+    \commentaire{Définition de la fonction plancer}
+    \sqrt{n} - 1
+    \<\geq
+    \commentaire{$\forall n \geq 4$}
+    \sqrt{n} - \frac{\sqrt{n}}{2}
     \<=
     \commentaire{Simplification}
-    \lim\limits_{n\to\infty}\frac{3}{4}
+    \frac{\sqrt{n}}{2}
     \<=
-    \commentaire{Application de la limite}
-    \frac{3}{4}
+    \commentaire{Définition de la racine carrée}
+    \frac{n^{\frac{1}{2}}}{2}
+    \<\in
+    \commentaire{Définition $\Omega$}
+    \Omega\pars{n^{\frac{1}{2}}}
 \end{deriv}
 
-Donc $h(i) \in \Theta \pars{n^4}$
+Trouvons $\BigO$
+\begin{deriv}
+    C_B\pars{n}
+    \<=
+    \commentaire{Définition de $C_B\pars{n}$}
+    \floor{\sqrt{n}}
+    \<\leq
+    \commentaire{Définition de la fonction plancer}
+    \sqrt{n}
+    \<=
+    \commentaire{Définition de la racine carrée}
+    n^{\frac{1}{2}}
+    \<\in
+    \commentaire{Définition $\BigO$}
+    \BigO\pars{n^{\frac{1}{2}}}
+\end{deriv}
 
+Donc $C_B\pars{n} \in \Theta\pars{n^{\frac{1}{2}}}$
 
+\subsection*{Résultat finaux}
+
+Nous avons pour le bloc A que $C_A\pars{n} \in \Theta\pars{n^4}$
+et pour le bloc B que $C_B\pars{n} \in \Theta\pars{n^{\frac{1}{2}}}$.
+
+Puisque chacun des blocs s'exécute une fois, nous pouvons conclure
+$C\pars{n} \in \Theta\pars{n^4} + \Theta\pars{n^{\frac{1}{2}}}$.
+
+En utilisant la règle du maximum, nous pouvons avoir:
+$C\pars{n} \in \Theta\pars{n^4}$.
 
 \end{document}
