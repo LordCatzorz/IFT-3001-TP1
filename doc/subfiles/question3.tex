@@ -1,7 +1,7 @@
 % !TeX root = ../main.tex
 \documentclass[class=article]{standalone}
 
-\begin{document}
+\begin{document} 
 \centerline{\Huge \bf Question 3}
 \section*{Algorithme 1}
 
@@ -271,5 +271,93 @@ $C\pars{n} \in \Theta\pars{n^4} + \Theta\pars{n^{\frac{1}{2}}}$.
 
 En utilisant la règle du maximum, nous pouvons avoir:
 $C\pars{n} \in \Theta\pars{n^4}$.
+
+\pagebreak
+
+\section*{Algorithme 2}
+\subsection*{Taille de l'instance}
+La taille de l'instance est $n$, le nombre d'élément dans l'étendue, 
+soit 1 plus la différence entre 
+le paramètre $r$ (position d'un élément à droite) et 
+le paramètre $l$ (position d'un élément à gauche).
+
+$n = (r - l) + 1$
+
+\subsubsection*{Opérateur de base}
+L'opérateur de base à utiliser est la comparaison \lstinline{l < r} du premier \lstinline{if}.
+C'est l'opération exécuter le plus souvent, car il n'y a aucune boucle dans la méthode et que
+c'est la première opération effectuée.
+
+\subsubsection*{Définition de la récurence}
+
+Le nombre $C\pars{n}$ d'opérations de base effectées sur un vecteur est donnée par la récurence suivante:
+
+\[
+  C\pars{n} =
+  \begin{cases}
+    1 & \text{si } n \leq 2 \\
+    1 + 3 \cdot C\pars{n-\floor{\frac{n}{3}}} & \text{si } n > 2 \\
+  \end{cases}
+\]
+
+Explication de la récurence:
+\begin{enumerate}
+    \item Si $n = 1+(l-r) \leq 1$, alors on effectue la comparaison (opérateur de base), 
+    puis on sort de la méthode directement.
+    \item Si $n = 1+(l-r) = 2$, alors on effectue la comparaison (opérateur de base), 
+    puis on effectue une deuxième comparaison (des valeurs), en effectuant ou non 
+    un échange, on n'entre pas par la suite dans dernier \lstinline{if}, puis on sort de la méthode.
+    \item Si $n = l-r \geq 3$, alors on effectue la comparaison (opérateur de base),
+    puis on effectue une deuxième comparaison (des valeurs), en effectuant ou non 
+    un échange, on entre par la suite dans le dernier \lstinline{if}, ou l'on
+    va appeler trois fois la récursion. Deux fois en retirant $k = \floor{\frac{n}{3}}$ 
+    de la valeur de $r$ et une fois en l'ajoutant à $l$, ce qui a pour effet de 
+    retirer retirer $k$ à $n$, d'où le $n-\floor{\frac{n}{3}}$.
+\end{enumerate}
+
+\subsubsection*{Résolution de la récurence (pour notation asymptotique)}
+Supposons $n = 3^k \equiv log_{3}\pars{n} = k$.
+
+Nous pouvons redéfinir $C\pars{n}$ ainsi:
+
+\begin{deriv}
+    C\pars{n}
+    \<= 
+    \commentaire{Définition de $C\pars{n}$}
+    1 + 3 \cdot C\pars{n-\floor{\frac{n}{3}}}
+    \<= 
+    \commentaire{Définition de $n$}
+    1 + 3 \cdot C\pars{3^k-\floor{\frac{3^k}{3}}}
+    \<= 
+    \commentaire{Règle des exposants}
+    1 + 3 \cdot C\pars{3^k-\floor{3^{k-1}}}
+    \<= 
+    \commentaire{Fonction plancher sur nombre entier}
+    1 + 3 \cdot C\pars{3^k-3^{k-1}}
+    \<= 
+    \commentaire{Règle des exposants}
+    1 + 3 \cdot C\pars{3\cdot3^{k-1}-3^{k-1}}
+    \<= 
+    \commentaire{Simplification ($3x-x = 2x$)}
+    1 + 3 \cdot C\pars{2\cdot3^{k-1}}
+\end{deriv}
+
+Nous aurons alors la définition de récurence suivante:
+\[
+  C\pars{3^k - 1}=
+  \begin{cases}
+    1 & \text{si } k \leq 0 \\
+    1 + 3 \cdot C\pars{\pars{3^k - 1} - \floor{\frac{\pars{3^k - 1}+1}{3}}} & \text{si } k > 1 \\
+  \end{cases}
+\]
+\begin{deriv}
+    C\pars{n}
+    \<= 
+    \commentaire{En supposant $n = 3^k - 1$}
+    C\pars{3^k - 1}
+    \<=
+    \commentaire{Définition de $C\pars{3^k - 1}$ via la définition de $C\pars{n}$}
+    1 + 3 \cdot C\pars{n-\floor{\frac{n+1}{3}}}
+\end{deriv}
 
 \end{document}
