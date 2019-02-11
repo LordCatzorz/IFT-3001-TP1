@@ -160,7 +160,7 @@ Donc
     \<=
     \commentaire{Simplification }
     n \cdot C_{push\_back}(n)
-    \<\approx
+    \<\simeq
     \commentaire{Abus de notation. 
     \\Définition de la complexité de \lstinline{std::vector::push_back} }
     n \cdot 1
@@ -191,7 +191,7 @@ En meilleur cas, le bloc B est exécuté après le bloc A. Nous avons donc :
     \<=
     \commentaire{Définition de $C^A_{best}(n)$ et $C^B(n)$}
     3 + C_{assign}(n)
-    \<\approx
+    \<\simeq
     \commentaire{Abus de notation. 
     \\Définition de la complexité de \lstinline{std::vector::assign}}
     3 + n
@@ -215,7 +215,7 @@ Dans le pire cas, le bloc C ou D est exécuté après le bloc A. Nous avons donc
     \<=
     \commentaire{Définition de $C^A_{best}(n)$ et $C^C(n)$}
     n + 1 + C_{assign}(n)
-    \<\approx
+    \<\simeq
     \commentaire{Abus de notation. 
     \\Définition de la complexité de \lstinline{std::vector::assign}}
     n + 1 + n
