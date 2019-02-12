@@ -21,19 +21,20 @@ Noeud Arbre::construire_noeud(const vector<const Point *> &points)
     fncBuildNode build_node;
     build_node = [&build_node, this](const vector<const Point *> &points, const size_t beginIndex, const size_t endIndex) {
         size_t nbPoints = (endIndex - beginIndex) + 1;
-        if (nbPoints = 1)
+        if (nbPoints == 1)
         {
             return Noeud(points.at(beginIndex));
         }
         else
         {
-            size_t middleIndex = beginIndex + (nbPoints / 2);
+            size_t middleIndex = beginIndex + ((nbPoints + (nbPoints % 2)) / 2) - 1;
+            assert(middleIndex + 1 <= endIndex);
             std::unique_ptr<Noeud> node1 = std::make_unique<Noeud>(build_node(points, beginIndex, middleIndex));
             std::unique_ptr<Noeud> node2 = std::make_unique<Noeud>(build_node(points, middleIndex + 1, endIndex));
 
             Noeud currentNode = Noeud();
             //Déterminer quel noeud est le gauche et le droit.
-            if (node1->x < node2->xMax)
+            if (node1->x <= node2->xMax)
             {
                 currentNode.enfantGauche = std::move(node1);
                 currentNode.enfantDroit = std::move(node2);
@@ -70,7 +71,50 @@ Noeud Arbre::construire_noeud(const vector<const Point *> &points)
 void Arbre::fusion(Noeud &parent)
 {
     // Insérer votre code ici
+    size_t nbLeafsLeft = parent.enfantGauche->valeursY.size();
+    size_t nbLeafsRight = parent.enfantDroit->valeursY.size();
+    size_t nbLeafsParent = nbLeafsLeft + nbLeafsRight;
+    size_t currentLeftIndex = 0;
+    size_t currentRightIndex = 0;
+    size_t currentParentIndex = 0;
+    size_t* ptrIncrementingIndex = &currentLeftIndex;
+
+    int currentLeftValue = parent.enfantGauche->valeursY.at(currentLeftIndex);
+    int currentRightValue = parent.enfantDroit->valeursY.at(currentRightIndex);
+    int pushedValue = std::numeric_limits<int>::min();
     
+    for(currentParentIndex; currentParentIndex < nbLeafsParent; currentParentIndex++)
+    {
+        if (currentLeftIndex < nbLeafsLeft 
+            && (currentRightIndex >= nbLeafsRight 
+                || currentLeftValue <= currentRightValue))
+        {
+            pushedValue = currentLeftValue;
+            ptrIncrementingIndex = &currentLeftIndex;
+        }
+        else
+        {
+            pushedValue = currentRightValue;
+            ptrIncrementingIndex = &currentRightIndex;
+        }
+
+        parent.valeursY.push_back(pushedValue);
+        parent.pointeursGauche.push_back(currentLeftValue <= pushedValue ? std::min<int>(currentLeftIndex, nbLeafsLeft -1) : currentLeftIndex - 1);
+        parent.pointeursDroite.push_back(currentRightValue <= pushedValue ? std::min<int>(currentRightIndex, nbLeafsRight -1) : currentRightIndex - 1);
+
+
+        (*ptrIncrementingIndex)++;
+
+        if (currentLeftIndex < nbLeafsLeft)
+        {
+            currentLeftValue = parent.enfantGauche->valeursY.at(currentLeftIndex);
+        }
+
+        if (currentRightIndex < nbLeafsRight)
+        {
+            currentRightValue = parent.enfantDroit->valeursY.at(currentRightIndex);
+        }
+    }
 
 
     // Le code qui suit est composé de post-conditions que la méthode fusion doit respecter pour
