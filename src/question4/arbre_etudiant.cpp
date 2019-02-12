@@ -9,25 +9,25 @@ using namespace std;
 
 // Type d'une fonction qui travaille sur un vecteur sans avoir à le copier.
 // Obliger de faire ainsi, puisque je ne peux pas modifier le .h.
-typedef std::function<Noeud(const vector<const Point *> &points, const int beginIndex, const int endIndex)> fncBuildNode;
+typedef std::function<Noeud(const vector<const Point *> &points, const size_t beginIndex, const size_t endIndex)> fncBuildNode;
 
 // La méthode construire_noeud doit construire un noeud dont les feuilles représentent les points contenus dans le
 // le vecteur points. S'il y a un seul point, le noeud est en fait une feuille. Utilisez la technique de conception
 // Diviser pour régner pour faire cette méthode. Vous pouvez vous inspirer de l'algorithme de tri fusion.
 Noeud Arbre::construire_noeud(const vector<const Point *> &points)
 {
-    // Déclaration d'une fonction lambda récursive pour initialiser le l'arbre à partir
+    // Déclaration d'une fonction lambda récursive pour initialiser l'arbre à partir
     // d'un vecteur sans avoir à le copier.
     fncBuildNode build_node;
-    build_node = [&build_node, this](const vector<const Point *> &points, const int beginIndex, const int endIndex) {
-        int nbPoints = (endIndex - beginIndex) + 1;
+    build_node = [&build_node, this](const vector<const Point *> &points, const size_t beginIndex, const size_t endIndex) {
+        size_t nbPoints = (endIndex - beginIndex) + 1;
         if (nbPoints = 1)
         {
             return Noeud(points.at(beginIndex));
         }
         else
         {
-            int middleIndex = beginIndex + (nbPoints / 2);
+            size_t middleIndex = beginIndex + (nbPoints / 2);
             std::unique_ptr<Noeud> node1 = std::make_unique<Noeud>(build_node(points, beginIndex, middleIndex));
             std::unique_ptr<Noeud> node2 = std::make_unique<Noeud>(build_node(points, middleIndex + 1, endIndex));
 
@@ -52,7 +52,7 @@ Noeud Arbre::construire_noeud(const vector<const Point *> &points)
             return currentNode;
         }
     };
-
+    
     return build_node(points, 0, points.size() - 1);
 }
 
@@ -70,6 +70,8 @@ Noeud Arbre::construire_noeud(const vector<const Point *> &points)
 void Arbre::fusion(Noeud &parent)
 {
     // Insérer votre code ici
+    
+
 
     // Le code qui suit est composé de post-conditions que la méthode fusion doit respecter pour
     // construire l'arbre correctement.
