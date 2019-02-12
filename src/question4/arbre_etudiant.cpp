@@ -27,8 +27,8 @@ Noeud Arbre::construire_noeud(const vector<const Point *> &points)
         }
         else
         {
-            size_t middleIndex = beginIndex + ((nbPoints + (nbPoints % 2)) / 2) - 1;
-            assert(middleIndex + 1 <= endIndex);
+            size_t middleIndex = beginIndex + ((nbPoints + (nbPoints % 2)) / 2) - 1; //(nbPoints % 2) permet de prévilégié l'arbre de droite pour les arbres impaires.
+
             std::unique_ptr<Noeud> node1 = std::make_unique<Noeud>(build_node(points, beginIndex, middleIndex));
             std::unique_ptr<Noeud> node2 = std::make_unique<Noeud>(build_node(points, middleIndex + 1, endIndex));
 
@@ -90,21 +90,39 @@ void Arbre::fusion(Noeud &parent)
                 || currentLeftValue <= currentRightValue))
         {
             pushedValue = currentLeftValue;
+            //Garder en pointeur l'indexeur de gauche
             ptrIncrementingIndex = &currentLeftIndex;
         }
         else
         {
             pushedValue = currentRightValue;
+            //Garder en pointeur l'indexeur de droit
             ptrIncrementingIndex = &currentRightIndex;
         }
 
+        //Ajouter la valeur dans Y
         parent.valeursY.push_back(pushedValue);
-        parent.pointeursGauche.push_back(currentLeftValue <= pushedValue ? std::min<int>(currentLeftIndex, nbLeafsLeft -1) : currentLeftIndex - 1);
-        parent.pointeursDroite.push_back(currentRightValue <= pushedValue ? std::min<int>(currentRightIndex, nbLeafsRight -1) : currentRightIndex - 1);
 
+        // Ajouter l'index dans G
+        int pushedLeftIndex = currentLeftIndex - 1;
+        if (currentLeftValue <= pushedValue)
+        {
+            pushedLeftIndex = std::min<int>(currentLeftIndex, nbLeafsLeft - 1);
+        }
+        parent.pointeursGauche.push_back(pushedLeftIndex);
 
+        // Ajouter l'index dans D
+        int pushedRightIndex = currentRightIndex - 1;
+        if (currentRightValue <= pushedValue)
+        {
+            pushedRightIndex = std::min<int>(currentRightIndex, nbLeafsRight -1);
+        }
+        parent.pointeursDroite.push_back(pushedRightIndex);
+
+        // Incrémenter le pointeur d'idexeur garder plus haut
         (*ptrIncrementingIndex)++;
 
+        // Rafraichir les valeurs des noeud.
         if (currentLeftIndex < nbLeafsLeft)
         {
             currentLeftValue = parent.enfantGauche->valeursY.at(currentLeftIndex);
