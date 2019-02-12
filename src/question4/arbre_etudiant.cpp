@@ -28,27 +28,27 @@ Noeud Arbre::construire_noeud(const vector<const Point *> &points)
         else
         {
             int middleIndex = beginIndex + (nbPoints / 2);
-            Noeud node1 = build_node(points, beginIndex, middleIndex);
-            Noeud node2 = build_node(points, middleIndex + 1, endIndex);
+            std::unique_ptr<Noeud> node1 = std::make_unique<Noeud>(build_node(points, beginIndex, middleIndex));
+            std::unique_ptr<Noeud> node2 = std::make_unique<Noeud>(build_node(points, middleIndex + 1, endIndex));
 
             Noeud currentNode = Noeud();
             //Déterminer quel noeud est le gauche et le droit.
-            if (node1.x < node2.xMax)
+            if (node1->x < node2->xMax)
             {
-                currentNode.enfantGauche = std::make_unique<Noeud>(node1);
-                currentNode.enfantDroit = std::make_unique<Noeud>(node2);
+                currentNode.enfantGauche = std::move(node1);
+                currentNode.enfantDroit = std::move(node2);
             }
             else
             {
-                currentNode.enfantGauche = std::make_unique<Noeud>(node2);
-                currentNode.enfantDroit = std::make_unique<Noeud>(node1);
+                currentNode.enfantGauche = std::move(node2);
+                currentNode.enfantDroit = std::move(node1);
             }
 
             currentNode.xMax = currentNode.enfantDroit->xMax;
             currentNode.x = currentNode.enfantGauche->xMax;
-            
+
             this->fusion(currentNode);
-            
+
             return currentNode;
         }
     };
