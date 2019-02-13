@@ -160,12 +160,12 @@ vector<const Point *> Arbre::requete(int chi, int gamma) const
         return vector<const Point *>();
     }
 
-    vector<const Point *> pointsSatisfaisantGamma;
     vector<const Point *> resultats;
 
     const Noeud *courant = racine.get();
 
     // Insérer votre code ici.
+    vector<const Point *> pointsSatisfaisantGamma;
     rapporter(courant, indexY, pointsSatisfaisantGamma);
 
     for (auto rit = pointsSatisfaisantGamma.crbegin(); rit != pointsSatisfaisantGamma.crend(); ++rit)
