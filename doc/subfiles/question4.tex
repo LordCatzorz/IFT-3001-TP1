@@ -6,8 +6,82 @@
 
 \centerline{Analyse de \lstinline{construire_noeud}}
 
+Notons que cette fonction possède un fonction privée récursive (\lstinline{build_node}) 
+et que la seule appel de la fonction \lstinline{construire_noeud}
+est à appel à cette fonction privée. Nous évalurons donc la fonction \lstinline{build_node}.
+
+\section*{Taille de l'instance}
+
+La taille de l'instance est $n$, le nombre d'éléments compris entre
+l'index \lstinline{beginIndex} et l'index \lstinline{endIndex} 
+inclusivement. ($n = $\lstinline{endIndex}$-$\lstinline{beginIndex}$+1$)
+
 \section*{Opération de base}
 
 Nous allons choisir comme opération de base l'appel à la comparaison \lstinline{nbPoints == 1}
+
+Cet opération est l'opération la plus effectué dans la fonction, car il n'y a pas de boucle 
+itérative suivant cet opération et qu'elle n'est pas imbriqué dans des conditionnels.
+
+Le nombre d'opération est dépendant uniquement dans la valeur de $n$.
+
+\section*{Analyse de la récusion}
+
+La récurence peut être donnée par la fonction suivante
+
+\[
+  C(n) =
+  \begin{cases}
+    1 & \text{si } n \leq 1 \\
+    1 + C(\ceil{\frac{n}{2}}) + C(\floor{\frac{n}{2}})  & \text{si } n > 1 \\
+  \end{cases}
+\]
+
+Nous la modifirons ainsi:
+
+\begin{deriv}
+  C\pars{n} =
+  \begin{cases}
+    1 & \text{si } n \leq 1 \\
+    1 + C(\ceil{\frac{n}{2}}) + C(\floor{\frac{n}{2}})  & \text{si } n > 1 \\
+  \end{cases}
+  \<\Rightarrow
+  \commentaire{En supposant que $n = 2^k$}
+  C\pars{2^k} =
+  \begin{cases}
+    1 & \text{si } k = 0 \\
+    1 + C(\ceil{\frac{2^k}{2}}) + C(\floor{\frac{2^k}{2}})  & \text{si } k \geq 1 \\
+  \end{cases}
+  \<\Rightarrow
+  \commentaire{Puisque $\frac{2^k}{2}$ est toujours un entier}
+  C\pars{2^k} =
+  \begin{cases}
+    1 & \text{si } k = 0 \\
+    1 + 2 \cdot C(\frac{2^k}{2})  & \text{si } k \geq 1 \\
+  \end{cases}
+  \<\Rightarrow
+  \commentaire{Rammener sur $n$}
+  C\pars{n} =
+  \begin{cases}
+    1 & \text{si } n \leq 1 \\
+    1 + 2 \cdot C(\frac{n}{2})  & \text{si } n > 1 \wedge n = 2^k \forall k \in \Natural^+ \\
+  \end{cases}
+\end{deriv}
+
+Nous avons ainsi une forme où le théorème général avec
+
+$r = 2 \wedge b = 2 \wedge f\pars{n} = n^0 \wedge d = 0$
+
+Nous obtenons la forme 3 du théorème général
+
+$r = 2 > 1 = 2^0 = b^d$
+
+donc
+
+$C\pars{n} \in \Theta\pars{n^{log_2 2}} \equiv C\pars{n} \in \Theta\pars{n} $
+
+\section*{Conclusion}
+
+La fonction \lstinline{construire_noeud} s'exécute donc en temps linéaire par rapport au nombre de points.
 
 \end{document}

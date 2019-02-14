@@ -16,7 +16,7 @@
 
 \section*{Résolution récurrence}
 Nous allons commencer par essayer de résoudre cette récurrence, que pour les 
-occurrences de $n = 3^k$ $\forall k \in \mathbb{N}$. Donc $k = log_3 n$
+occurrences de $n = 3^k$ $\forall k \in \Natural$. Donc $k = log_3 n$
 
 Nous aurons alors 
 
@@ -190,11 +190,11 @@ Borne inférieure:
 Donc comme $3 \pars{n-n^{log_3(2)}} \in \Omega \pars {n}$ et $3 \pars{n-n^{log_3(2)}} \in \BigO \pars{n}$,
 nous pouvons conclure que $3 \pars{n-n^{log_3(2)}} \in \Theta\pars{n}$.
 
-Nous pouvons aussi conclure que $C\pars{n} \in \Theta\pars{n}$ pour $n = 3^k$ $\forall k \in \mathbb{N}$
+Nous pouvons aussi conclure que $C\pars{n} \in \Theta\pars{n}$ pour $n = 3^k$ $\forall k \in \Natural$
 
 \section*{Démonstration de la validité pour tout entier n}
 Nous pouvons utiliser la règle de l'harmonie pour montrer que la notation asymptotique que
-nous avons trouvé pour les $n = 3^k$ est valide $\forall n \in \mathbb{N}$. Pour ce faire, nous devons montrer 3 choses :
+nous avons trouvé pour les $n = 3^k$ est valide $\forall n \in \Natural$. Pour ce faire, nous devons montrer 3 choses :
 
 \begin{enumerate}
   \item $3 \pars{n-n^{log_3(2)}}$ doit être éventuellement non décroissante. 
@@ -215,12 +215,12 @@ nous avons trouvé pour les $n = 3^k$ est valide $\forall n \in \mathbb{N}$. Pou
     2 \commentaire{Valeur constante $> 0$, $2n \in \Theta\pars{n}$}
   \end{deriv} 
 
-  \item On doit avoir $C\pars{n} \in \Theta\pars{n}$ pour $n = b^k$ $\forall k \in \mathbb{N}$
+  \item On doit avoir $C\pars{n} \in \Theta\pars{n}$ pour $n = b^k$ $\forall k \in \Natural$
   
   C'est le cas puisque nous l'avons démontré dans la section "Notation asymptotique" avec 
   $b = 3$.
 \end{enumerate}
 
-Puisque nous répondons aux trois critères, nous pouvons conclure que $C(n) \in \Theta\pars{n}$ $\forall n \in \mathbb{N}$.
+Puisque nous répondons aux trois critères, nous pouvons conclure que $C(n) \in \Theta\pars{n}$ $\forall n \in \Natural$.
 
 \end{document}
