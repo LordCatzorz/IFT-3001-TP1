@@ -27,7 +27,7 @@ Noeud Arbre::construire_noeud(const vector<const Point *> &points)
         }
         else
         {
-            size_t middleIndex = beginIndex + ((nbPoints + (nbPoints % 2)) / 2) - 1; //(nbPoints % 2) permet de prévilégié l'arbre de droite pour les arbres impaires.
+            size_t middleIndex = beginIndex + std::ceil(nbPoints/2.0f) - 1; // Fonction plafond pour privilégier la première moitié.
 
             std::unique_ptr<Noeud> node1 = std::make_unique<Noeud>(build_node(points, beginIndex, middleIndex));
             std::unique_ptr<Noeud> node2 = std::make_unique<Noeud>(build_node(points, middleIndex + 1, endIndex));
