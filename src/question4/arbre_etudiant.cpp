@@ -27,7 +27,7 @@ Noeud Arbre::construire_noeud(const vector<const Point *> &points)
         }
         else
         {
-            size_t middleIndex = beginIndex + std::ceil(nbPoints/2.0f) - 1; // Fonction plafond pour privilégier la première moitié.
+            size_t middleIndex = beginIndex + std::ceil(nbPoints / 2.0f) - 1; // Fonction plafond pour privilégier la première moitié.
 
             std::unique_ptr<Noeud> node1 = std::make_unique<Noeud>(build_node(points, beginIndex, middleIndex));
             std::unique_ptr<Noeud> node2 = std::make_unique<Noeud>(build_node(points, middleIndex + 1, endIndex));
@@ -53,7 +53,7 @@ Noeud Arbre::construire_noeud(const vector<const Point *> &points)
             return currentNode;
         }
     };
-    
+
     return build_node(points, 0, points.size() - 1);
 }
 
@@ -77,17 +77,15 @@ void Arbre::fusion(Noeud &parent)
     size_t currentLeftIndex = 0;
     size_t currentRightIndex = 0;
     size_t currentParentIndex = 0;
-    size_t* ptrIncrementingIndex = &currentLeftIndex;
+    size_t *ptrIncrementingIndex = &currentLeftIndex;
 
     int currentLeftValue = parent.enfantGauche->valeursY.at(currentLeftIndex);
     int currentRightValue = parent.enfantDroit->valeursY.at(currentRightIndex);
     int pushedValue = std::numeric_limits<int>::min();
-    
-    for(currentParentIndex; currentParentIndex < nbLeafsParent; currentParentIndex++)
+
+    for (currentParentIndex; currentParentIndex < nbLeafsParent; currentParentIndex++)
     {
-        if (currentLeftIndex < nbLeafsLeft 
-            && (currentRightIndex >= nbLeafsRight 
-                || currentLeftValue <= currentRightValue))
+        if (currentLeftIndex < nbLeafsLeft && (currentRightIndex >= nbLeafsRight || currentLeftValue <= currentRightValue))
         {
             pushedValue = currentLeftValue;
             //Garder en pointeur l'indexeur de gauche
@@ -115,7 +113,7 @@ void Arbre::fusion(Noeud &parent)
         int pushedRightIndex = currentRightIndex - 1;
         if (currentRightValue <= pushedValue)
         {
-            pushedRightIndex = std::min<int>(currentRightIndex, nbLeafsRight -1);
+            pushedRightIndex = std::min<int>(currentRightIndex, nbLeafsRight - 1);
         }
         parent.pointeursDroite.push_back(pushedRightIndex);
 
@@ -165,14 +163,31 @@ vector<const Point *> Arbre::requete(int chi, int gamma) const
     const Noeud *courant = racine.get();
 
     // Insérer votre code ici.
-    vector<const Point *> pointsSatisfaisantGamma;
-    rapporter(courant, indexY, pointsSatisfaisantGamma);
-
-    for (auto rit = pointsSatisfaisantGamma.crbegin(); rit != pointsSatisfaisantGamma.crend(); ++rit)
+    bool done = false;
+    while ((!done) && (indexY != -1))
     {
-        if ((*rit)->x <= chi)
+        if (courant->xMax <= chi)
         {
-            resultats.push_back((*rit));
+            rapporter(courant, indexY, resultats);
+            done = true;
+        }
+        else if (courant->x <= chi)
+        {
+            rapporter(courant->enfantGauche.get(), courant->pointeursGauche[indexY], resultats);
+            indexY = courant->pointeursDroite[indexY];
+            courant = courant->enfantDroit.get();
+        }
+        else
+        {
+            if (courant->is_feuille())
+            {
+                done = true;
+            }
+            else
+            {
+                indexY = courant->pointeursGauche[indexY];
+                courant = courant->enfantGauche.get();
+            }
         }
     }
 
