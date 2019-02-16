@@ -6,9 +6,9 @@
 
 \centerline{Analyse de \lstinline{construire_noeud}}
 
-Notons que cette fonction possède un fonction privée récursive (\lstinline{build_node}) 
-et que la seule appel de la fonction \lstinline{construire_noeud}
-est à appel à cette fonction privée. Nous évalurons donc la fonction \lstinline{build_node}.
+Notons que cette fonction possède une fonction privée récursive (\lstinline{build_node}) 
+et que la seule opération de \lstinline{construire_noeud}
+est l'appel à cette fonction privée. Nous évaluons donc la fonction \lstinline{build_node}.
 
 \section*{Taille de l'instance}
 
@@ -20,14 +20,14 @@ inclusivement. ($n = $\lstinline{endIndex}$-$\lstinline{beginIndex}$+1$)
 
 Nous allons choisir comme opération de base l'appel à la comparaison \lstinline{nbPoints == 1}
 
-Cet opération est l'opération la plus effectué dans la fonction, car il n'y a pas de boucle 
-itérative suivant cet opération et qu'elle n'est pas imbriqué dans des conditionnels.
+Cette opération est l'opération la plus effectuée dans la fonction, car il n'y a pas de boucles 
+itératives suivant cette opération et qu'elle n'est pas imbriquée dans des conditionnels.
 
-Le nombre d'opération est dépendant uniquement dans la valeur de $n$.
+Le nombre d'opérations dépend uniquement dans la valeur de $n$.
 
-\section*{Analyse de la récusion}
+\section*{Analyse de la récursion}
 
-La récurence peut être donnée par la fonction suivante
+La récurrence peut être donnée par la fonction suivante
 
 \[
   C(n) =
@@ -37,7 +37,7 @@ La récurence peut être donnée par la fonction suivante
   \end{cases}
 \]
 
-Nous la modifirons ainsi:
+Nous la modifions ainsi:
 
 \begin{deriv}
   C\pars{n} =
@@ -60,7 +60,7 @@ Nous la modifirons ainsi:
     1 + 2 \cdot C(\frac{2^k}{2})  & \text{si } k \geq 1 \\
   \end{cases}
   \<\Rightarrow
-  \commentaire{Rammener sur $n$}
+  \commentaire{Ramener sur $n$}
   C\pars{n} =
   \begin{cases}
     1 & \text{si } n \leq 1 \\

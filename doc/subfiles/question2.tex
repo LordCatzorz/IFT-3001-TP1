@@ -15,7 +15,7 @@
 \]
 
 \section*{Résolution récurrence}
-Nous allons commencer par essayer de résoudre cette récurrence, que pour les 
+Nous allons commencer par essayer de résoudre cette récurrence que pour les 
 occurrences de $n = 3^k$ $\forall k \in \Natural$. Donc $k = log_3 n$
 
 Nous aurons alors 
@@ -77,7 +77,7 @@ Résolvons:
   \commentaire{Simplification}
   \sum\limits_{i=1}^{k}\pars{2^{k-i} \cdot 3^i}
   \<=
-  \commentaire{Règle expostant}
+  \commentaire{Règle exposant}
   \sum\limits_{i=1}^{k}\pars{\frac{2^{k}}{2^{i}} \cdot 3^i}
   \<=
   \commentaire{Séparer fraction}
@@ -194,7 +194,7 @@ Nous pouvons aussi conclure que $C\pars{n} \in \Theta\pars{n}$ pour $n = 3^k$ $\
 
 \section*{Démonstration de la validité pour tout entier n}
 Nous pouvons utiliser la règle de l'harmonie pour montrer que la notation asymptotique que
-nous avons trouvé pour les $n = 3^k$ est valide $\forall n \in \Natural$. Pour ce faire, nous devons montrer 3 choses :
+nous avons trouvée pour les $n = 3^k$ est valide $\forall n \in \Natural$. Pour ce faire, nous devons montrer 3 choses :
 
 \begin{enumerate}
   \item $3 \pars{n-n^{log_3(2)}}$ doit être éventuellement non décroissante. 

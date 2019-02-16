@@ -15,7 +15,7 @@ L'algorithme se base sur ces observations suivantes:
 \end{enumerate}
 
 L'algorithme débute donc en initialisant une variable pour conserver le produit total (initialisé à 1), 
-ainsi que deux variables "indicatices" (flags). Un pour conserver l'indice d'un élément absorbant et l'autre pour indiquer s'il y a plus d'un élément absorbant.
+ainsi que deux variables "indicatices" (flags). Une pour conserver l'indice d'un élément absorbant et l'autre pour indiquer s'il y a plus d'un élément absorbant.
 
 Puis, l'algorithme parcourt tous les éléments de notre vecteur entrant. S'il trouve pour la première fois un zéro, il affectera l'indice
 où cet élément se trouve dans le vecteur. S'il en trouve un deuxième il affecte la valeur booléen indiquant plusieurs zéros à vrai. 
@@ -186,7 +186,7 @@ En meilleur cas, le bloc B est exécuté après le bloc A. Nous avons donc :
 \begin{deriv}
     C_{best}(n)
     \<=
-    \commentaire{Définition de la complexité de $C_best$}
+    \commentaire{Définition de la complexité de $C_{best}$}
     C^A_{best}(n) + C^B(n)
     \<=
     \commentaire{Définition de $C^A_{best}(n)$ et $C^B(n)$}

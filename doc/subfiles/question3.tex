@@ -99,7 +99,7 @@ soit une borne inférieure de $\sum\limits_{i=1}^n \pars{n^3 - i^3 + 1}$.
     \commentaire{Mettre sur la même base}
     \frac{4n^4}{4} - \frac{n^4+4n^3+6n^2+4n}{4} + \frac{4n}{4}
     \<=
-    \commentaire{Rammener sur la même division}
+    \commentaire{Ramener sur la même division}
     \frac{4n^4 - \pars{n^4+4n^3+6n^2+4n} + 4n}{4}
     \<=
     \commentaire{Distribuer la soustraction}
@@ -108,7 +108,7 @@ soit une borne inférieure de $\sum\limits_{i=1}^n \pars{n^3 - i^3 + 1}$.
     \commentaire{Simplifier}
     \frac{3n^4 - 4n^3 - 6n^2}{4}
     \<=
-    \commentaire{Extraction de $frac{n^2}{4}$}
+    \commentaire{Extraction de $\frac{n^2}{4}$}
     \frac{n^2}{4}\pars{3n^2 - 4n - 6}
     \<\geq
     \commentaire{$\forall n \geq 6$}
@@ -171,10 +171,13 @@ soit une borne supérieure de $\sum\limits_{i=1}^n \pars{n^3 - i^3 + 1}$.
     n^4 - \frac{n^4}{4} + n
     \<=
     \commentaire{Simplification}
-    \frac{3}{4}n^4  + n
+    \frac{3}{4}n^4 + n
     \<\leq
     \commentaire{$\forall n \geq 0$}
-    \frac{3}{4}n^4
+    \frac{3}{4}n^4 + n^4
+    \<=
+    \commentaire{Simplification}
+    \frac{7}{4}n^4
     \<\in 
     \commentaire{Définition de $\BigO$}
     \BigO\pars{n^4}
@@ -216,7 +219,7 @@ En utilisant la définition de la fonction plancher, nous avons:
 
 $\sqrt{n} - 1 < C_B\pars{n} \leq \sqrt{n}$
 
-Utilisons ces inéquation pour trouver la notation asymptotique de $C_B\pars{n}$
+Utilisons ces inéquations pour trouver la notation asymptotique de $C_B\pars{n}$
 
 Trouvons $\Omega$
 
@@ -226,7 +229,7 @@ Trouvons $\Omega$
     \commentaire{Définition de $C_B\pars{n}$}
     \floor{\sqrt{n}}
     \<>
-    \commentaire{Définition de la fonction plancer}
+    \commentaire{Définition de la fonction plancher}
     \sqrt{n} - 1
     \<\geq
     \commentaire{$\forall n \geq 4$}
@@ -249,7 +252,7 @@ Trouvons $\BigO$
     \commentaire{Définition de $C_B\pars{n}$}
     \floor{\sqrt{n}}
     \<\leq
-    \commentaire{Définition de la fonction plancer}
+    \commentaire{Définition de la fonction plancher}
     \sqrt{n}
     \<=
     \commentaire{Définition de la racine carrée}
@@ -261,7 +264,7 @@ Trouvons $\BigO$
 
 Donc $C_B\pars{n} \in \Theta\pars{n^{\frac{1}{2}}}$
 
-\subsection*{Résultat finaux}
+\subsection*{Résultat final}
 
 Nous avons pour le bloc A que $C_A\pars{n} \in \Theta\pars{n^4}$
 et pour le bloc B que $C_B\pars{n} \in \Theta\pars{n^{\frac{1}{2}}}$.
@@ -276,7 +279,7 @@ $C\pars{n} \in \Theta\pars{n^4}$.
 
 \section*{Algorithme 2}
 \subsection*{Taille de l'instance}
-La taille de l'instance est $n$, le nombre d'élément dans l'étendue, 
+La taille de l'instance est $n$, le nombre d'éléments dans l'étendue, 
 soit 1 plus la différence entre 
 le paramètre $r$ (position d'un élément à droite) et 
 le paramètre $l$ (position d'un élément à gauche).
@@ -288,9 +291,9 @@ L'opérateur de base à utiliser est la comparaison \lstinline{l < r} du premier
 C'est l'opération exécuter le plus souvent, car il n'y a aucune boucle dans la méthode et que
 c'est la première opération effectuée.
 
-\subsubsection*{Définition de la récurence}
+\subsubsection*{Définition de la récurrence}
 
-Le nombre $C\pars{n}$ d'opérations de base effectées sur un vecteur est donnée par la récurence suivante:
+Le nombre $C\pars{n}$ d'opérations de base effectuées sur un vecteur est donné par la récurrence suivante:
 
 \[
   C\pars{n} =
@@ -300,7 +303,7 @@ Le nombre $C\pars{n}$ d'opérations de base effectées sur un vecteur est donné
   \end{cases}
 \]
 
-Explication de la récurence:
+Explication de la récurrence:
 \begin{enumerate}
     \item Si $n = 1+(l-r) \leq 1$, alors on effectue la comparaison (opérateur de base), 
     puis on sort de la méthode directement.
@@ -315,7 +318,7 @@ Explication de la récurence:
     retirer retirer $k$ à $n$, d'où le $n-\floor{\frac{n}{3}}$.
 \end{enumerate}
 
-\subsubsection*{Résolution de la récurence (pour notation asymptotique)}
+\subsubsection*{Résolution de la récurrence (pour notation asymptotique)}
 Supposons $n = 3^k \equiv log_{3}\pars{n} = k$.
 
 Nous pouvons redéfinir $C\pars{n}$ ainsi:
@@ -356,7 +359,7 @@ Nous pouvons redéfinir $C\pars{n}$ ainsi:
     \commentaire{Réécriture}
     3 \cdot C\pars{\frac{n}{\frac{3}{2}}} + 1
     \<\in
-    \commentaire{Théorème générale avec $r=3$, $b=\frac{3}{2}$ et $d=0$\\
+    \commentaire{Théorème général avec $r=3$, $b=\frac{3}{2}$ et $d=0$\\
                  et $r = 3 > b^d = \pars{\frac{3}{2}}^0 = 1$\\
                  $d = 0$, puisque $1 \in \Theta\pars{n^0}$}
     \Theta\pars{n^{log_{\frac{3}{2}}3}}
