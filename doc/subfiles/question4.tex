@@ -18,10 +18,10 @@ inclusivement. ($n = $\lstinline{endIndex}$-$\lstinline{beginIndex}$+1$)
 
 \section*{Opération de base}
 
-Nous allons choisir comme opération de base l'appel à la comparaison \lstinline{nbPoints == 1}
+Nous devons choisir comme opération de base l'appel à la fonction \lstinline{fusion}.
 
-Cette opération est l'opération la plus effectuée dans la fonction, car il n'y a pas de boucles 
-itératives suivant cette opération et qu'elle n'est pas imbriquée dans des conditionnels.
+Cette opération est l'opération la plus effectuée dans la fonction à une constante prêt, car il n'y a pas de boucles 
+itératives suivant cette opération et qu'elle est imbriquée dans une conditionnels mais dont il n'y a pas d'autre traitement autour.
 
 Le nombre d'opérations dépend uniquement dans la valeur de $n$.
 
@@ -32,25 +32,64 @@ La récurrence peut être donnée par la fonction suivante
 \[
   C(n) =
   \begin{cases}
-    1 & \text{si } n \leq 1 \\
-    1 + C(\ceil{\frac{n}{2}}) + C(\floor{\frac{n}{2}})  & \text{si } n > 1 \\
+    0 & \text{si } n \leq 1 \\
+    C\pars{\ceil{\frac{n}{2}}} + C\pars{\floor{\frac{n}{2}}} + C_{\lstinline{fusion}}\pars{n}  & \text{si } n > 1 \\
   \end{cases}
 \]
 
-Nous la modifions ainsi:
+Nous devons donc commencer par analyser la méthode de $C_{\lstinline{fusion}}\pars{n}$.
+
+\subsubsection*{Analyse de \lstinline{fusion}}
+\subsubsubsection*{Taille de l'instance}
+
+La taille de l'instance est $n$, le nombre de feuille dans l'arbre du noeud, 
+soit la somme des feuilles de son noeud gauche et de son noeud droit.
+
+\subsubsubsection*{Opération de base}
+
+Remarquons que tous les opérations dans cette méthodes sont de complexité constante (ou constante ammorti).
+
+Nous prendrons comme opération de base la comparaison \listinline{currentParentIndex < nbLeafsParent} de
+la boucle \lstinline{for}.
+
+Cette opération est la plus appelé de la méthode, puisqu'il n'y a qu'une seule boucle et que c'est l'opérateur de sortie de cette boucle.
+
+Il n'y a pas de meilleur ou de pire cas, le nombre de fois qu'est appelé cette opération peut être donné par la sommation suivante:
+
+$C_{\lstinline{fusion}}\pars{n} = \sum\limits_{i=0}^{n-1}1$
+
+Résolvons cette sommation
+
+\begin{deriv}
+  C_{\lstinline{fusion}}\pars{n}
+  \<= 
+  \commentaire{Définition de \lstinline{fusion}}
+  \sum\limits_{i=0}^{n-1}1
+  \<=
+  \commentaire{Sommation d'une constante}
+  \pars{n-1 - 0 + 1} \cdot 1
+  \<=
+  \commentaire{Simplification}
+  n
+\end{deriv} 
+
+Donc C_{\lstinline{fusion}}\pars{n} \in \Theta\pars{n}
+
+\subsection*{Retour à l'analyse de \lstinline{construire_noeud}}
+Nous modifions la récurrence ainsi:
 
 \begin{deriv}
   C\pars{n} =
   \begin{cases}
-    1 & \text{si } n \leq 1 \\
-    1 + C(\ceil{\frac{n}{2}}) + C(\floor{\frac{n}{2}})  & \text{si } n > 1 \\
+    0 & \text{si } n \leq 1 \\
+    C\pars{\ceil{\frac{n}{2}}} + C\pars{\floor{\frac{n}{2}}} + C_{\lstinline{fusion}}\pars{n}  & \text{si } n > 1 \\
   \end{cases}
   \<\Rightarrow
   \commentaire{En supposant que $n = 2^k$}
   C\pars{2^k} =
   \begin{cases}
-    1 & \text{si } k = 0 \\
-    1 + C(\ceil{\frac{2^k}{2}}) + C(\floor{\frac{2^k}{2}})  & \text{si } k \geq 1 \\
+    0 & \text{si } k = 0 \\
+    C\pars{\ceil{\frac{2^k}{2}}} + C\pars{\floor{\frac{2^k}{2}}} + C_{\lstinline{fusion}}\pars{2^k}  & \text{si } k \geq 1 \\
   \end{cases}
   \<\Rightarrow
   \commentaire{Puisque $\frac{2^k}{2}$ est toujours un entier}
