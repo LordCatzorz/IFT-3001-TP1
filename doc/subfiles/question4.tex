@@ -33,35 +33,37 @@ La récurrence peut être donnée par la fonction suivante
   C(n) =
   \begin{cases}
     0 & \text{si } n \leq 1 \\
-    C\pars{\ceil{\frac{n}{2}}} + C\pars{\floor{\frac{n}{2}}} + C_{\lstinline{fusion}}\pars{n}  & \text{si } n > 1 \\
+    C\pars{\ceil{\frac{n}{2}}} + C\pars{\floor{\frac{n}{2}}} + C_{fusion}\pars{n}  & \text{si } n > 1 \\
   \end{cases}
 \]
 
-Nous devons donc commencer par analyser la méthode de $C_{\lstinline{fusion}}\pars{n}$.
+Nous devons donc commencer par analyser la méthode de $C_{fusion}\pars{n}$.
 
-\subsubsection*{Analyse de \lstinline{fusion}}
-\subsubsubsection*{Taille de l'instance}
+\section*{Analyse de \lstinline{fusion}}
+
+\subsubsection*{Taille de l'instance}
 
 La taille de l'instance est $n$, le nombre de feuille dans l'arbre du noeud, 
 soit la somme des feuilles de son noeud gauche et de son noeud droit.
 
-\subsubsubsection*{Opération de base}
+\subsubsection*{Opération de base}
 
 Remarquons que tous les opérations dans cette méthodes sont de complexité constante (ou constante ammorti).
 
-Nous prendrons comme opération de base la comparaison \listinline{currentParentIndex < nbLeafsParent} de
-la boucle \lstinline{for}.
+Nous prendrons comme opération de base la comparaison 
+
+\lstinline{currentParentIndex < nbLeafsParent} de la boucle \lstinline{for}.
 
 Cette opération est la plus appelé de la méthode, puisqu'il n'y a qu'une seule boucle et que c'est l'opérateur de sortie de cette boucle.
 
 Il n'y a pas de meilleur ou de pire cas, le nombre de fois qu'est appelé cette opération peut être donné par la sommation suivante:
 
-$C_{\lstinline{fusion}}\pars{n} = \sum\limits_{i=0}^{n-1}1$
+$C_{fusion}\pars{n} = \sum\limits_{i=0}^{n-1}1$
 
 Résolvons cette sommation
 
 \begin{deriv}
-  C_{\lstinline{fusion}}\pars{n}
+  C_{fusion}\pars{n}
   \<= 
   \commentaire{Définition de \lstinline{fusion}}
   \sum\limits_{i=0}^{n-1}1
@@ -73,54 +75,61 @@ Résolvons cette sommation
   n
 \end{deriv} 
 
-Donc C_{\lstinline{fusion}}\pars{n} \in \Theta\pars{n}
+Donc $C_{fusion}\pars{n} \in \Theta\pars{n}$
 
-\subsection*{Retour à l'analyse de \lstinline{construire_noeud}}
+\section*{Retour à l'analyse de \lstinline{construire_noeud}}
 Nous modifions la récurrence ainsi:
 
 \begin{deriv}
   C\pars{n} =
   \begin{cases}
     0 & \text{si } n \leq 1 \\
-    C\pars{\ceil{\frac{n}{2}}} + C\pars{\floor{\frac{n}{2}}} + C_{\lstinline{fusion}}\pars{n}  & \text{si } n > 1 \\
+    C\pars{\ceil{\frac{n}{2}}} + C\pars{\floor{\frac{n}{2}}} + C_{fusion}\pars{n}  & \text{si } n > 1 \\
   \end{cases}
   \<\Rightarrow
   \commentaire{En supposant que $n = 2^k$}
   C\pars{2^k} =
   \begin{cases}
     0 & \text{si } k = 0 \\
-    C\pars{\ceil{\frac{2^k}{2}}} + C\pars{\floor{\frac{2^k}{2}}} + C_{\lstinline{fusion}}\pars{2^k}  & \text{si } k \geq 1 \\
-  \end{cases} %JE SUIS RENDU ICI
+    C\pars{\ceil{\frac{2^k}{2}}} + C\pars{\floor{\frac{2^k}{2}}} + C_{fusion}\pars{2^k}  & \text{si } k \geq 1 \\
+  \end{cases}
   \<\Rightarrow
   \commentaire{Puisque $\frac{2^k}{2}$ est toujours un entier}
   C\pars{2^k} =
   \begin{cases}
-    1 & \text{si } k = 0 \\
-    1 + 2 \cdot C(\frac{2^k}{2})  & \text{si } k \geq 1 \\
+    0 & \text{si } k = 0 \\
+    2 \cdot C(\frac{2^k}{2}) + C_{fusion}\pars{2^k} & \text{si } k \geq 1 \\
   \end{cases}
   \<\Rightarrow
   \commentaire{Ramener sur $n$}
   C\pars{n} =
   \begin{cases}
-    1 & \text{si } n \leq 1 \\
-    1 + 2 \cdot C(\frac{n}{2})  & \text{si } n > 1 \wedge n = 2^k \forall k \in \Natural^+ \\
+    0 & \text{si } n \leq 1 \\
+    2 \cdot C(\frac{n}{2}) + C_{fusion}\pars{n}  & \text{si } n > 1 \wedge n = 2^k \forall k \in \Natural^+ \\
+  \end{cases}
+  \<\Rightarrow
+  \commentaire{Définition de $C_{fusion}\pars{n}$}
+  C\pars{n} =
+  \begin{cases}
+    0 & \text{si } n \leq 1 \\
+    2 \cdot C(\frac{n}{2}) + n  & \text{si } n > 1 \wedge n = 2^k \forall k \in \Natural^+ \\
   \end{cases}
 \end{deriv}
 
 Nous avons ainsi une forme où le théorème général avec
 
-$r = 2 \wedge b = 2 \wedge f\pars{n} = n^0 \wedge d = 0$
+$r = 2 \wedge b = 2 \wedge f\pars{n} = n^1 \wedge d = 1$
 
 Nous obtenons la forme 3 du théorème général
 
-$r = 2 > 1 = 2^0 = b^d$
+$r = 2 = 2 = 2^1 = b^d$
 
 donc
 
-$C\pars{n} \in \Theta\pars{n^{log_2 2}} \equiv C\pars{n} \in \Theta\pars{n} $
+$C\pars{n} \in \Theta\pars{n^1\text{ log } n} \equiv C\pars{n} \in \Theta\pars{n \text{ log } n} $
 
 \section*{Conclusion}
 
-La fonction \lstinline{construire_noeud} s'exécute donc en temps linéaire par rapport au nombre de points.
+La fonction \lstinline{construire_noeud} s'exécute donc en temps $n \text{ log } n$ par rapport au nombre de points.
 
 \end{document}
